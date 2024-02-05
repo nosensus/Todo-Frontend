@@ -8,7 +8,7 @@ interface ModalProps {
 function Modal({ onClose }: ModalProps) {
   return (
     <>
-      <div className="modal">
+      <div className="modal" onClick={onClose}>
         <div className="modal__container">
           <div className="mb-4">
             <form action="">
