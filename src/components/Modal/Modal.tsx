@@ -1,37 +1,18 @@
-import { Button } from "../Button";
 import "./Modal.css";
 
 interface ModalProps {
+  children: React.ReactNode;
+  title: string;
   onClose: () => void;
 }
 
-function Modal({ onClose }: ModalProps) {
+function Modal({ children, title, onClose }: ModalProps) {
   return (
     <>
-      <div className="modal" onClick={onClose}>
-        <div className="modal__container">
-          <div className="mb-4">
-            <form action="">
-              <label htmlFor="title">Title</label>
-              <input id="title" type="text" />
-
-              <label htmlFor="description">Description</label>
-              <textarea name="" id="description"></textarea>
-
-              <label htmlFor="category">Category</label>
-              <select name="" id="category">
-                <option value="">Car</option>
-                <option value="">Market</option>
-                <option value="">Home</option>
-                <option value="">Family</option>
-              </select>
-            </form>
-          </div>
-          <div className="flex justify-between">
-            <Button onClick={() => {}}>Add</Button>
-            <Button onClick={onClose}>Close</Button>
-          </div>
-        </div>
+      <div className="modal_bg" onClick={onClose}></div>
+      <div className="modal">
+        <h2>{title}</h2>
+        {children}
       </div>
     </>
   );

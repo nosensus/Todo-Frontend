@@ -1,4 +1,4 @@
-.modal {
+.modal_bg {
   position: fixed;
   top: 0;
   left: 0;
@@ -8,19 +8,14 @@
   background: rgba(0, 0, 0, 0.3);
 }
 
-.modal__container {
+.modal {
   position: absolute;
   top: 10%;
   left: 50%;
+  z-index: 101;
   margin-left: -200px;
   padding: 20px;
   width: 400px;
   background-color: #fff;
   border-radius: 6px;
-}
-
-input, textarea, select {
-  border: 1px solid gray;
-  border-radius: 4px;
-  width: 100%;
 }

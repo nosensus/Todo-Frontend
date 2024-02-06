@@ -1,12 +1,12 @@
 export interface ICard {
-  id: string
+  id?: string
   title: string
   description: string
   category: number
-  dueDate: string
-  cardColor: number
-  isImportant: boolean,
-  isCompleted: boolean,
-  createdDate: string
-  updatedDate: string
+  dueDate?: string
+  cardColor?: number
+  isImportant?: boolean,
+  isCompleted?: boolean,
+  createdDate?: string
+  updatedDate?: string
 }

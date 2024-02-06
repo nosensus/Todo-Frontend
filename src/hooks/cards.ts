@@ -7,6 +7,10 @@ function useCards() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  function addCard(card: ICard) {
+    setCards(prev =>[...prev, card]);
+  }
+
   async function fetchCards() {
     try {
       setError("");
@@ -25,7 +29,7 @@ function useCards() {
     fetchCards();
   }, []);
 
-  return {error, loading, cards};
+  return {error, loading, cards, addCard};
 }
 
 export {useCards}
