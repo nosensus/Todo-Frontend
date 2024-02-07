@@ -1,4 +1,4 @@
 import { Card } from "./Card";
-import { CardCreate } from "./CardCreate";
+import { CardCreateEdit } from "./CardCreateEdit";
 
-export { Card, CardCreate };
+export { Card, CardCreateEdit };

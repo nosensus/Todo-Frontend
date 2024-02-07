@@ -11,7 +11,7 @@ interface ICreateProps {
   onCreate: (card: ICard) => void;
 }
 
-function CardCreate({ onCreate }: ICreateProps) {
+function CardCreateEdit({ onCreate }: ICreateProps) {
   const [dueDate, setDueDate] = useState(new Date());
   const [error, setError] = useState("");
 
@@ -113,7 +113,6 @@ function CardCreate({ onCreate }: ICreateProps) {
             <input
               className="form-check-input"
               type="checkbox"
-              value=""
               id="isImportant"
               name="isImportant"
             />
@@ -133,4 +132,4 @@ function CardCreate({ onCreate }: ICreateProps) {
   );
 }
 
-export { CardCreate };
+export { CardCreateEdit };
