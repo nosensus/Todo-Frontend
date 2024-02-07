@@ -6,14 +6,14 @@ import { ErrorMessage } from "./components/ErrorMessage";
 import { createPortal } from "react-dom";
 import { Button } from "./components/Button";
 import { Modal } from "./components/Modal";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { ICard } from "./components/Card/ICard";
 import { ModalContext } from "./context/ModalContext";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   const { cards, loading, error, addCard } = useCards();
   const { modal, open, close } = useContext(ModalContext);
-  const [showModal, setShowModal] = useState(false);
 
   const createHandler = (card: ICard) => {
     close();
@@ -25,7 +25,8 @@ function App() {
       <Header />
       <section className="container mx-auto">
         <h1 className="text-3xl font-bold mb-4">Dashboard</h1>
-        <Button onClick={() => setShowModal(true)}>New Todo</Button>
+
+        <Button onClick={open}>Add Todo</Button>
 
         {loading && <Loader />}
         {error && <ErrorMessage error={error} />}
@@ -37,18 +38,13 @@ function App() {
           </div>
         }
         <div>
-          {showModal &&
+          {modal &&
             createPortal(
               <Modal title="Add Todo" onClose={close}>
                 <CardCreate onCreate={createHandler} />
               </Modal>,
               document.body
             )}
-          {/* {showModal &&
-            createPortal(
-              <Modal onClose={() => setShowModal(false)} />,
-              document.body
-            )} */}
         </div>
       </section>
     </>

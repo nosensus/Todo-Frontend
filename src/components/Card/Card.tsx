@@ -1,8 +1,7 @@
 import Moment from "moment";
-import { CardActions } from ".";
-import { FaCalendarDay } from "@react-icons/all-files/fa/FaCalendarDay";
-import "./Card.css";
 import { ICard } from "./ICard";
+import CardItem from "react-bootstrap/Card";
+import { Button } from "react-bootstrap";
 
 interface CardProps {
   card: ICard;
@@ -10,19 +9,26 @@ interface CardProps {
 
 function Card({ card }: CardProps) {
   return (
-    <section className="card">
-      <div className="flex justify-between mb-4">
-        <h1 className="font-medium underline decoration-sky-500 text-lg">
-          {card.title}
-        </h1>
-        <CardActions />
-      </div>
-      <p className="text-base font-mono mb-4">{card.description}</p>
-      <span className="flex justify-start items-center">
-        <FaCalendarDay className="mr-1" />
-        Due Date: {Moment(card.dueDate).format("DD MMMM YY")}
-      </span>
-    </section>
+    <CardItem>
+      <CardItem.Body>
+        <CardItem.Title className="mb-4">{card.title}</CardItem.Title>
+        <CardItem.Text className="mb-4">{card.description}</CardItem.Text>
+        <CardItem.Subtitle className="mb-4 text-muted">
+          Due Date: {Moment(card.dueDate).format("DD MMMM YY")}
+        </CardItem.Subtitle>
+        <div className="display-flex justify-content-between">
+          <a href="#" className="btn btn-primary mr-2">
+            Complete
+          </a>
+          <a href="#" className="btn btn-warning mr-2">
+            Edit
+          </a>
+          <a href="#" className="btn btn-danger">
+            Delete
+          </a>
+        </div>
+      </CardItem.Body>
+    </CardItem>
   );
 }
 
