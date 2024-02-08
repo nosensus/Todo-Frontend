@@ -1,4 +1,4 @@
-export interface ICard {
+interface ICard {
   id?: string
   title: string
   description: string
@@ -10,3 +10,5 @@ export interface ICard {
   createdDate?: string
   updatedDate?: string
 }
+
+export {type ICard}

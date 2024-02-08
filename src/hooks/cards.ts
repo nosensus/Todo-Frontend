@@ -2,25 +2,25 @@ import { useState, useEffect } from "react"
 import { ICard } from "../components/Card/ICard";
 import axios, { AxiosError } from "axios";
 
-function useCards() {
+const useCards = () => {
   const [cards, setCards] = useState<ICard[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
-  function addCard(card: ICard) {
+  function cardHook(card: ICard) {
     setCards(prev =>[...prev, card]);
   }
 
   async function fetchCards() {
     try {
       setError("");
-      setLoading(true);
+      setIsLoading(true);
       const response = await axios.get<ICard[]>("https://aufgabenliste.azurewebsites.net/api/todo")
       setCards(response.data);
-      setLoading(false);
+      setIsLoading(false);
     } catch (e: unknown) {
       const error = e as AxiosError;
-      setLoading(false);
+      setIsLoading(false);
       setError(error.message);
     }
   }
@@ -29,7 +29,7 @@ function useCards() {
     fetchCards();
   }, []);
 
-  return {error, loading, cards, addCard};
+  return {error, isLoading, cards, cardHook};
 }
 
 export {useCards}
