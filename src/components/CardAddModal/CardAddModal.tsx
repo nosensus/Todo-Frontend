@@ -7,24 +7,25 @@ import { format } from "date-fns";
 import { ICard } from "../Card";
 import "react-datepicker/dist/react-datepicker.css";
 import "./CardAddModal.css";
-import { useCards } from "../../hooks";
 
 interface CardAddModalProps {
-  onClose: () => void;
+  onCardCreate: (card: ICard) => void;
+  onCloseModal: () => void;
 }
 
-const CardAddModal = ({ onClose }: CardAddModalProps) => {
+const card: ICard = {
+  title: "",
+  description: "",
+  category: 1,
+  dueDate: "",
+  isImportant: false,
+  isCompleted: false,
+};
+
+const CardAddModal = ({ onCardCreate, onCloseModal }: CardAddModalProps) => {
   const [dueDate, setDueDate] = useState(new Date());
   const [error, setError] = useState("");
-  const { cardHook } = useCards();
-
-  const [post, setPost] = useState({
-    title: "",
-    description: "",
-    category: 1,
-    dueDate: "",
-    isImportant: false,
-  });
+  const [post, setPost] = useState<ICard>(card);
 
   const changeHandler = (event: any) => {
     setPost({ ...post, [event.target.name]: event.target.value });
@@ -44,13 +45,13 @@ const CardAddModal = ({ onClose }: CardAddModalProps) => {
       post
     );
 
-    cardHook(response.data);
-    onClose();
+    onCardCreate(response.data);
+    onCloseModal();
   };
 
   return (
     <>
-      <div className="modal_bg" onClick={onClose}></div>
+      <div className="modal_bg" onClick={onCloseModal}></div>
       <div className="modal_container">
         <h1 className="mb-3 font-medium">Add Todo</h1>
 

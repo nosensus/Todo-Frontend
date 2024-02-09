@@ -7,11 +7,15 @@ import { Button } from "./components/Button";
 import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { CardAddModal } from "./components/CardAddModal/CardAddModal";
-import { Card } from "./components/Card";
+import { Card, ICard } from "./components/Card";
 
 function App() {
-  const { cards, isLoading, error } = useCards();
+  const { cards, isLoading, error, cardHook } = useCards();
   const [showModal, setShowModal] = useState(false);
+
+  const CardAddHandler = (card: ICard) => {
+    cardHook(card);
+  };
 
   return (
     <>
@@ -36,7 +40,10 @@ function App() {
 
         {showModal &&
           createPortal(
-            <CardAddModal onClose={() => setShowModal(false)}></CardAddModal>,
+            <CardAddModal
+              onCardCreate={CardAddHandler}
+              onCloseModal={() => setShowModal(false)}
+            ></CardAddModal>,
             document.body
           )}
       </section>
