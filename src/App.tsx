@@ -13,8 +13,10 @@ function App() {
   const { cards, isLoading, error, cardHook } = useCards();
   const [showModal, setShowModal] = useState(false);
   const [cardDelete, setCardDelete] = useState(String);
-  const [cardComple, setCardComplete] = useState(false);
+  const [cardComplete, setCardComplete] = useState(false);
   const [cardEdit, setCardEdit] = useState<ICard>();
+
+  console.log("just to pass build", cardEdit, cardComplete);
 
   const cardAddHandler = (card: ICard) => {
     cardHook(card);
