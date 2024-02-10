@@ -34,8 +34,12 @@ const CardEditModal = ({ card, onClose }: EditModalProps) => {
     setError("");
 
     post.dueDate = format(dueDate, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
-    const response = await axios.post<ICard>(
-      "https://aufgabenliste.azurewebsites.net/api/todo",
+    const response = await axios.put<ICard>(
+      "https://aufgabenliste.azurewebsites.net/api/todo" +
+        "/" +
+        card.id +
+        "?id=" +
+        card.id,
       post
     );
 
@@ -63,7 +67,7 @@ const CardEditModal = ({ card, onClose }: EditModalProps) => {
                 id="title"
                 name="title"
                 type="text"
-                value={card.title}
+                defaultValue={card.title}
                 onChange={changeHandler}
               />
             </div>
@@ -76,7 +80,7 @@ const CardEditModal = ({ card, onClose }: EditModalProps) => {
                 className="form-control"
                 name="description"
                 id="description"
-                value={card.description}
+                defaultValue={card.description}
                 onChange={changeHandler}
               ></textarea>
             </div>
@@ -89,7 +93,7 @@ const CardEditModal = ({ card, onClose }: EditModalProps) => {
                 className="form-control"
                 name="category"
                 id="category"
-                value={card.category}
+                defaultValue={card.category}
                 onChange={changeHandler}
               >
                 <option value="None">None</option>
