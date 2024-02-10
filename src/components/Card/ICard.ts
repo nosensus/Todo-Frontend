@@ -4,11 +4,11 @@ interface ICard {
   description: string
   category: number
   dueDate?: string
-  cardColor?: number
-  isImportant?: boolean,
-  isCompleted?: boolean,
+  cardColor: number
+  isImportant: boolean,
+  isCompleted: boolean,
   createdDate?: string
   updatedDate?: string
 }
 
-export {type ICard}
+export { type ICard }

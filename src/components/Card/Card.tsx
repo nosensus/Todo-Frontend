@@ -7,6 +7,7 @@ import { CardEditModal } from "../CardEditModal";
 import { useCardDelete } from "../../hooks";
 import { Loader } from "../Loader";
 import { ErrorMessage } from "../ErrorMessage";
+import { Category } from ".";
 
 interface CardProps {
   card: ICard;
@@ -37,7 +38,12 @@ const Card = ({ card, isImportant, onCardDelete }: CardProps) => {
 
       <CardItem className={isImportant ? "border-red-600 bg-red-200" : ""}>
         <CardItem.Body>
-          <CardItem.Title className="mb-4">{card.title}</CardItem.Title>
+          <CardItem.Title className="mb-4">
+            {card.title}{" "}
+            <span className="float-right text-sm text-cyan-700">
+              {Category[card.category]}
+            </span>
+          </CardItem.Title>
           <CardItem.Text className="mb-4">{card.description}</CardItem.Text>
           <CardItem.Subtitle className="mb-4 text-muted">
             Due Date: {Moment(card.dueDate).format("DD MMMM YY")}
