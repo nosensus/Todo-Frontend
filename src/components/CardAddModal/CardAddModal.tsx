@@ -26,6 +26,7 @@ const CardAddModal = ({ onCardCreate, onCloseModal }: CardAddModalProps) => {
   const [dueDate, setDueDate] = useState(new Date());
   const [error, setError] = useState("");
   const [post, setPost] = useState<ICard>(card);
+  const [isImportant, setIsImportant] = useState(false);
 
   const changeHandler = (event: any) => {
     setPost({ ...post, [event.target.name]: event.target.value });
@@ -35,11 +36,17 @@ const CardAddModal = ({ onCardCreate, onCloseModal }: CardAddModalProps) => {
     setDueDate(date);
   };
 
+  const importantHandler = (event: any) => {
+    setIsImportant(event.target.checked);
+  };
+
   const submitHandler = async (event: React.FormEvent) => {
     event.preventDefault();
     setError("");
 
     post.dueDate = format(dueDate, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
+    post.isImportant = isImportant;
+
     const response = await axios.post<ICard>(
       "https://aufgabenliste.azurewebsites.net/api/todo",
       post
@@ -126,6 +133,8 @@ const CardAddModal = ({ onCardCreate, onCloseModal }: CardAddModalProps) => {
                 type="checkbox"
                 id="isImportant"
                 name="isImportant"
+                checked={isImportant}
+                onChange={importantHandler}
               />
               <label className="form-check-label" htmlFor="isImportant">
                 Important

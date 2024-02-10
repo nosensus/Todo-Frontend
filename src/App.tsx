@@ -41,6 +41,7 @@ function App() {
               .filter((c) => c.id != deleteCard)
               .map((card) => (
                 <Card
+                  isImportant={card.isImportant}
                   key={card.id}
                   card={card}
                   onCardDelete={() => cardDeleteHandler(card.id!)}

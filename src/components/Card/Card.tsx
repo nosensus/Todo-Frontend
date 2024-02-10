@@ -4,16 +4,17 @@ import CardItem from "react-bootstrap/Card";
 import { useState } from "react";
 import { createPortal } from "react-dom";
 import { CardEditModal } from "../CardEditModal";
-import { useCardDelete, useCards } from "../../hooks";
+import { useCardDelete } from "../../hooks";
 import { Loader } from "../Loader";
 import { ErrorMessage } from "../ErrorMessage";
 
 interface CardProps {
   card: ICard;
+  isImportant: boolean;
   onCardDelete: (id: string) => void;
 }
 
-const Card = ({ card, onCardDelete }: CardProps) => {
+const Card = ({ card, isImportant, onCardDelete }: CardProps) => {
   const [editCard, setEditCard] = useState(card);
   const [showModal, setShowModal] = useState(false);
   const { isLoading, error, cardDelete } = useCardDelete();
@@ -34,7 +35,7 @@ const Card = ({ card, onCardDelete }: CardProps) => {
 
       {error && <ErrorMessage error={error} />}
 
-      <CardItem>
+      <CardItem className={isImportant ? "border-red-600 bg-red-200" : ""}>
         <CardItem.Body>
           <CardItem.Title className="mb-4">{card.title}</CardItem.Title>
           <CardItem.Text className="mb-4">{card.description}</CardItem.Text>
