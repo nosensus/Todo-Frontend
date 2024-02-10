@@ -6,7 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { Button } from "../Button";
 import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
 import { format } from "date-fns";
-import { ICard } from "../Card";
+import { Category, Color, ICard } from "../Card";
 import { useCards } from "../../hooks";
 
 interface EditModalProps {
@@ -18,6 +18,7 @@ const CardEditModal = ({ card, onClose }: EditModalProps) => {
   const [dueDate, setDueDate] = useState(new Date());
   const [error, setError] = useState("");
   const [post, setPost] = useState(card);
+  const [isImportant, setIsImportant] = useState(false);
   const { cardHook } = useCards();
   const inputRef = useRef(null);
 
@@ -29,11 +30,19 @@ const CardEditModal = ({ card, onClose }: EditModalProps) => {
     setDueDate(date);
   };
 
+  const importantHandler = (event: any) => {
+    setIsImportant(event.target.checked);
+  };
+
   const submitHandler = async (event: React.FormEvent) => {
     event.preventDefault();
     setError("");
 
     post.dueDate = format(dueDate, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
+    post.isImportant = isImportant;
+    post.category = +post.category;
+    post.cardColor = +post.cardColor;
+
     const response = await axios.put<ICard>(
       "https://aufgabenliste.azurewebsites.net/api/todo" +
         "/" +
@@ -96,14 +105,36 @@ const CardEditModal = ({ card, onClose }: EditModalProps) => {
                 defaultValue={card.category}
                 onChange={changeHandler}
               >
-                <option value="None">None</option>
-                <option value="Home">Home</option>
-                <option value="Work">Work</option>
-                <option value="Main">Main</option>
-                <option value="Children">Children</option>
-                <option value="Car">Car</option>
-                <option value="Products">Products</option>
-                <option value="Holiday">Holiday</option>
+                <option value={Category.None}>None</option>
+                <option value={Category.Home}>Home</option>
+                <option value={Category.Work}>Work</option>
+                <option value={Category.Main}>Main</option>
+                <option value={Category.Children}>Children</option>
+                <option value={Category.Car}>Car</option>
+                <option value={Category.Products}>Products</option>
+                <option value={Category.Holiday}>Holiday</option>
+              </select>
+            </div>
+
+            <div className="mb-3">
+              <label className="form-label" htmlFor="cardColor">
+                Card color
+              </label>
+              <select
+                className="form-control"
+                name="cardColor"
+                id="cardColor"
+                defaultValue={card.category}
+                onChange={changeHandler}
+              >
+                <option value={Color.White}>White</option>
+                <option value={Color.Red}>Red</option>
+                <option value={Color.Green}>Green</option>
+                <option value={Color.Black}>Black</option>
+                <option value={Color.Blue}>Blue</option>
+                <option value={Color.Yellow}>Yellow</option>
+                <option value={Color.Purple}>Purple</option>
+                <option value={Color.Pink}>Pink</option>
               </select>
             </div>
 
@@ -116,7 +147,6 @@ const CardEditModal = ({ card, onClose }: EditModalProps) => {
                   minDate={new Date()}
                   name="dueDate"
                   id="dueDate"
-                  value={card.dueDate}
                   selected={dueDate}
                   onChange={changeHandlerDate}
                 />
@@ -129,8 +159,8 @@ const CardEditModal = ({ card, onClose }: EditModalProps) => {
                 type="checkbox"
                 id="isImportant"
                 name="isImportant"
-                checked={card.isImportant}
-                onChange={changeHandler}
+                defaultChecked={card.isImportant}
+                onChange={importantHandler}
               />
               <label className="form-check-label" htmlFor="isImportant">
                 Important

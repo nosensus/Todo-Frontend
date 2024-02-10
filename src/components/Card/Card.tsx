@@ -15,6 +15,7 @@ interface CardProps {
   isImportant: boolean;
   onCardDelete: (id: string) => void;
   onCardComplete: (complete: boolean) => void;
+  onCardEdit: (card: ICard) => void;
 }
 
 const Card = ({
@@ -22,6 +23,7 @@ const Card = ({
   isImportant,
   onCardComplete,
   onCardDelete,
+  onCardEdit,
 }: CardProps) => {
   const [editCard, setEditCard] = useState(card);
   const [showModal, setShowModal] = useState(false);
@@ -31,6 +33,7 @@ const Card = ({
   const EditCardHandle = () => {
     setShowModal(true);
     setEditCard(card);
+    onCardEdit(card);
   };
 
   const DeleteCardHandler = () => {

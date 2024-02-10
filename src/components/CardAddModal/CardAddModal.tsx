@@ -157,7 +157,7 @@ const CardAddModal = ({ onCardCreate, onCloseModal }: CardAddModalProps) => {
                 type="checkbox"
                 id="isImportant"
                 name="isImportant"
-                checked={isImportant}
+                defaultChecked={card.isImportant}
                 onChange={importantHandler}
               />
               <label className="form-check-label" htmlFor="isImportant">

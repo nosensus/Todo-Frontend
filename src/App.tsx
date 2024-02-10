@@ -14,6 +14,7 @@ function App() {
   const [showModal, setShowModal] = useState(false);
   const [cardDelete, setCardDelete] = useState(String);
   const [cardComple, setCardComplete] = useState(false);
+  const [cardEdit, setCardEdit] = useState<ICard>();
 
   const cardAddHandler = (card: ICard) => {
     cardHook(card);
@@ -25,6 +26,10 @@ function App() {
 
   const cardCompleteHandler = (complete: boolean) => {
     setCardComplete(complete);
+  };
+
+  const cardEditHandler = (card: ICard) => {
+    setCardEdit(card);
   };
 
   return (
@@ -51,6 +56,7 @@ function App() {
                   card={card}
                   onCardComplete={() => cardCompleteHandler(card.isCompleted)}
                   onCardDelete={() => cardDeleteHandler(card.id!)}
+                  onCardEdit={() => cardEditHandler(card)}
                 />
               ))}
           </div>
