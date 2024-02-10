@@ -1,3 +1,4 @@
 import { useCards } from "./cards";
+import { useCardDelete } from "./cardDelete";
 
-export {useCards}
+export {useCards, useCardDelete}

@@ -12,9 +12,14 @@ import { Card, ICard } from "./components/Card";
 function App() {
   const { cards, isLoading, error, cardHook } = useCards();
   const [showModal, setShowModal] = useState(false);
+  const [deleteCard, setDeleteCard] = useState(String);
 
-  const CardAddHandler = (card: ICard) => {
+  const cardAddHandler = (card: ICard) => {
     cardHook(card);
+  };
+
+  const cardDeleteHandler = (id: string) => {
+    setDeleteCard(id);
   };
 
   return (
@@ -32,16 +37,22 @@ function App() {
 
         {
           <div className="grid grid-cols-4 gap-4">
-            {cards.map((card) => (
-              <Card key={card.id} card={card} />
-            ))}
+            {cards
+              .filter((c) => c.id != deleteCard)
+              .map((card) => (
+                <Card
+                  key={card.id}
+                  card={card}
+                  onCardDelete={() => cardDeleteHandler(card.id!)}
+                />
+              ))}
           </div>
         }
 
         {showModal &&
           createPortal(
             <CardAddModal
-              onCardCreate={CardAddHandler}
+              onCardCreate={cardAddHandler}
               onCloseModal={() => setShowModal(false)}
             ></CardAddModal>,
             document.body

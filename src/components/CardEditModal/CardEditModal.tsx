@@ -1,5 +1,5 @@
 import "./CardEditModal.css";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -19,6 +19,7 @@ const CardEditModal = ({ card, onClose }: EditModalProps) => {
   const [error, setError] = useState("");
   const [post, setPost] = useState(card);
   const { cardHook } = useCards();
+  const inputRef = useRef(null);
 
   const changeHandler = (event: any) => {
     setPost({ ...post, [event.target.name]: event.target.value });
@@ -57,6 +58,7 @@ const CardEditModal = ({ card, onClose }: EditModalProps) => {
                 Title
               </label>
               <input
+                ref={inputRef}
                 className="form-control"
                 id="title"
                 name="title"

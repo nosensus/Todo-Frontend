@@ -4,22 +4,36 @@ import CardItem from "react-bootstrap/Card";
 import { useState } from "react";
 import { createPortal } from "react-dom";
 import { CardEditModal } from "../CardEditModal";
+import { useCardDelete, useCards } from "../../hooks";
+import { Loader } from "../Loader";
+import { ErrorMessage } from "../ErrorMessage";
 
 interface CardProps {
   card: ICard;
+  onCardDelete: (id: string) => void;
 }
 
-const Card = ({ card }: CardProps) => {
+const Card = ({ card, onCardDelete }: CardProps) => {
   const [editCard, setEditCard] = useState(card);
   const [showModal, setShowModal] = useState(false);
+  const { isLoading, error, cardDelete } = useCardDelete();
 
   const EditCardHandle = () => {
     setShowModal(true);
     setEditCard(card);
   };
 
+  const DeleteCardHandler = () => {
+    cardDelete(card.id!);
+    onCardDelete(card.id!);
+  };
+
   return (
     <>
+      {isLoading && <Loader />}
+
+      {error && <ErrorMessage error={error} />}
+
       <CardItem>
         <CardItem.Body>
           <CardItem.Title className="mb-4">{card.title}</CardItem.Title>
@@ -38,7 +52,7 @@ const Card = ({ card }: CardProps) => {
             >
               Edit
             </a>
-            <a href="#" className="btn btn-danger">
+            <a href="#" className="btn btn-danger" onClick={DeleteCardHandler}>
               Delete
             </a>
           </div>

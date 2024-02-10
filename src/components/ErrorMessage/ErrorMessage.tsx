@@ -3,7 +3,11 @@ interface IErrorMessage {
 }
 
 const ErrorMessage = ({ error }: IErrorMessage) => {
-  return <p className="to-red-500">{error}</p>;
+  return (
+    <p className="absolute top-10 left-1/2" style={{ color: "#dc3545" }}>
+      {error}
+    </p>
+  );
 };
 
 export { ErrorMessage };
