@@ -107,7 +107,7 @@ const CardEditModal = ({ card, onClose }: EditModalProps) => {
               <label className="form-label" htmlFor="dueDate">
                 Due date
               </label>
-              <div className="form-control">
+              <div className="form-control customDatePickerWidth">
                 <DatePicker
                   minDate={new Date()}
                   name="dueDate"
