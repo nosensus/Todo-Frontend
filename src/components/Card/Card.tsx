@@ -8,17 +8,25 @@ import { useCardDelete } from "../../hooks";
 import { Loader } from "../Loader";
 import { ErrorMessage } from "../ErrorMessage";
 import { Category } from ".";
+import { useCardComplete } from "../../hooks/cardComplete";
 
 interface CardProps {
   card: ICard;
   isImportant: boolean;
   onCardDelete: (id: string) => void;
+  onCardComplete: (complete: boolean) => void;
 }
 
-const Card = ({ card, isImportant, onCardDelete }: CardProps) => {
+const Card = ({
+  card,
+  isImportant,
+  onCardComplete,
+  onCardDelete,
+}: CardProps) => {
   const [editCard, setEditCard] = useState(card);
   const [showModal, setShowModal] = useState(false);
   const { isLoading, error, cardDelete } = useCardDelete();
+  const { cardComplete } = useCardComplete();
 
   const EditCardHandle = () => {
     setShowModal(true);
@@ -28,6 +36,11 @@ const Card = ({ card, isImportant, onCardDelete }: CardProps) => {
   const DeleteCardHandler = () => {
     cardDelete(card.id!);
     onCardDelete(card.id!);
+  };
+
+  const CompleteCardHandler = () => {
+    cardComplete(card);
+    onCardComplete(card.isCompleted);
   };
 
   return (
@@ -49,9 +62,16 @@ const Card = ({ card, isImportant, onCardDelete }: CardProps) => {
             Due Date: {Moment(card.dueDate).format("DD MMMM YY")}
           </CardItem.Subtitle>
           <div className="display-flex justify-content-between">
-            <a href="#" className="btn btn-primary mr-2">
-              Complete
-            </a>
+            {!card.isCompleted && (
+              <a
+                href="#"
+                className="btn btn-primary mr-2"
+                onClick={CompleteCardHandler}
+              >
+                Complete
+              </a>
+            )}
+
             <a
               href="#"
               className="btn btn-warning mr-2"
@@ -59,7 +79,11 @@ const Card = ({ card, isImportant, onCardDelete }: CardProps) => {
             >
               Edit
             </a>
-            <a href="#" className="btn btn-danger" onClick={DeleteCardHandler}>
+            <a
+              href="#"
+              className="btn btn-danger mr-0"
+              onClick={DeleteCardHandler}
+            >
               Delete
             </a>
           </div>

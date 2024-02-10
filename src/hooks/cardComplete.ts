@@ -1,15 +1,19 @@
 import axios, { AxiosError } from "axios";
 import { useState } from "react";
+import { ICard } from "../components/Card";
 
-const useCardDelete = () => {
+const useCardComplete = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
-  async function cardDelete(cardId: string) {
+  async function cardComplete(card: ICard) {
     try {
       setError("");
       setIsLoading(true);
-      await axios.delete("https://aufgabenliste.azurewebsites.net/api/todo" + "/" + cardId)
+      card.isCompleted = true;
+      await axios.put<ICard>(
+        "https://aufgabenliste.azurewebsites.net/api/todo" + "/" + card.id + "?id=" + card.id,
+        card)
       setIsLoading(false);
     } catch (e: unknown) {
       const error = e as AxiosError;
@@ -18,7 +22,7 @@ const useCardDelete = () => {
     }
   }
 
-  return { error, isLoading, cardDelete };
+  return { error, isLoading, cardComplete };
 }
 
-export { useCardDelete }
+export { useCardComplete }

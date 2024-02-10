@@ -12,14 +12,19 @@ import { Card, ICard } from "./components/Card";
 function App() {
   const { cards, isLoading, error, cardHook } = useCards();
   const [showModal, setShowModal] = useState(false);
-  const [deleteCard, setDeleteCard] = useState(String);
+  const [cardDelete, setCardDelete] = useState(String);
+  const [cardComple, setCardComplete] = useState(false);
 
   const cardAddHandler = (card: ICard) => {
     cardHook(card);
   };
 
   const cardDeleteHandler = (id: string) => {
-    setDeleteCard(id);
+    setCardDelete(id);
+  };
+
+  const cardCompleteHandler = (complete: boolean) => {
+    setCardComplete(complete);
   };
 
   return (
@@ -38,12 +43,13 @@ function App() {
         {
           <div className="grid grid-cols-4 gap-4">
             {cards
-              .filter((c) => c.id != deleteCard)
+              .filter((c) => c.id != cardDelete && c.isCompleted != true)
               .map((card) => (
                 <Card
                   isImportant={card.isImportant}
                   key={card.id}
                   card={card}
+                  onCardComplete={() => cardCompleteHandler(card.isCompleted)}
                   onCardDelete={() => cardDeleteHandler(card.id!)}
                 />
               ))}
