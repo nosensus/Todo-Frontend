@@ -53,7 +53,7 @@ const Card = ({
       {error && <ErrorMessage error={error} />}
 
       <CardItem className={isImportant ? "border-red-600 bg-red-200" : ""}>
-        <CardItem.Body>
+        <CardItem.Body className={card.isCompleted ? "bg-gray-100" : ""}>
           <CardItem.Title className="mb-4">
             {card.title}{" "}
             <span className="float-right text-sm text-cyan-700">
@@ -66,29 +66,30 @@ const Card = ({
           </CardItem.Subtitle>
           <div className="display-flex justify-content-between">
             {!card.isCompleted && (
-              <a
-                href="#"
-                className="btn btn-primary mr-2"
-                onClick={CompleteCardHandler}
-              >
-                Complete
-              </a>
+              <>
+                <a
+                  href="#"
+                  className="btn btn-primary mr-2"
+                  onClick={CompleteCardHandler}
+                >
+                  Complete
+                </a>
+                <a
+                  href="#"
+                  className="btn btn-warning mr-2"
+                  onClick={EditCardHandle}
+                >
+                  Edit
+                </a>
+                <a
+                  href="#"
+                  className="btn btn-danger mr-0"
+                  onClick={DeleteCardHandler}
+                >
+                  Delete
+                </a>
+              </>
             )}
-
-            <a
-              href="#"
-              className="btn btn-warning mr-2"
-              onClick={EditCardHandle}
-            >
-              Edit
-            </a>
-            <a
-              href="#"
-              className="btn btn-danger mr-0"
-              onClick={DeleteCardHandler}
-            >
-              Delete
-            </a>
           </div>
         </CardItem.Body>
       </CardItem>
