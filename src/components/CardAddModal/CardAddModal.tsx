@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import axios from "axios";
 import DatePicker from "react-datepicker";
 import { Button } from "../Button";
 import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
-import { format } from "date-fns";
 import { Category, Color, ICard } from "../Card";
 import "react-datepicker/dist/react-datepicker.css";
 import "./CardAddModal.css";
+import { useCardAdd } from "../../hooks/cardAdd";
+import { Loader } from "../Loader";
 
 interface CardAddModalProps {
   onCardCreate: (card: ICard) => void;
@@ -25,9 +25,9 @@ const card: ICard = {
 
 const CardAddModal = ({ onCardCreate, onCloseModal }: CardAddModalProps) => {
   const [dueDate, setDueDate] = useState(new Date());
-  const [error, setError] = useState("");
   const [post, setPost] = useState<ICard>(card);
   const [isImportant, setIsImportant] = useState(false);
+  const { error, isLoading, cardAdd } = useCardAdd();
 
   const changeHandler = (event: any) => {
     setPost({ ...post, [event.target.name]: event.target.value });
@@ -43,19 +43,8 @@ const CardAddModal = ({ onCardCreate, onCloseModal }: CardAddModalProps) => {
 
   const submitHandler = async (event: React.FormEvent) => {
     event.preventDefault();
-    setError("");
-
-    post.dueDate = format(dueDate, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
-    post.isImportant = isImportant;
-    post.category = +post.category;
-    post.cardColor = +post.cardColor;
-
-    const response = await axios.post<ICard>(
-      "https://aufgabenliste.azurewebsites.net/api/todo",
-      post
-    );
-
-    onCardCreate(response.data);
+    await cardAdd(post, dueDate, isImportant);
+    // onCardCreate(post);
     onCloseModal();
   };
 
@@ -64,6 +53,8 @@ const CardAddModal = ({ onCardCreate, onCloseModal }: CardAddModalProps) => {
       <div className="modal_bg" onClick={onCloseModal}></div>
       <div className="modal_container">
         <h1 className="mb-3 font-medium">Add Todo</h1>
+
+        {isLoading && <Loader />}
 
         {error && <ErrorMessage error={error} />}
 

@@ -1,13 +1,11 @@
 import "./CardEditModal.css";
-import React, { useRef, useState } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Button } from "../Button";
 import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
-import { format } from "date-fns";
 import { Category, Color, ICard } from "../Card";
-import { useCards } from "../../hooks";
+import { useCardEdit } from "../../hooks/cardEdit";
 
 interface EditModalProps {
   card: ICard;
@@ -16,11 +14,9 @@ interface EditModalProps {
 
 const CardEditModal = ({ card, onClose }: EditModalProps) => {
   const [dueDate, setDueDate] = useState(new Date());
-  const [error, setError] = useState("");
   const [post, setPost] = useState(card);
   const [isImportant, setIsImportant] = useState(false);
-  const { cardHook } = useCards();
-  const inputRef = useRef(null);
+  const { error, cardEdit } = useCardEdit();
 
   const changeHandler = (event: any) => {
     setPost({ ...post, [event.target.name]: event.target.value });
@@ -36,23 +32,7 @@ const CardEditModal = ({ card, onClose }: EditModalProps) => {
 
   const submitHandler = async (event: React.FormEvent) => {
     event.preventDefault();
-    setError("");
-
-    post.dueDate = format(dueDate, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
-    post.isImportant = isImportant;
-    post.category = +post.category;
-    post.cardColor = +post.cardColor;
-
-    const response = await axios.put<ICard>(
-      "https://aufgabenliste.azurewebsites.net/api/todo" +
-        "/" +
-        card.id +
-        "?id=" +
-        card.id,
-      post
-    );
-
-    cardHook(response.data);
+    await cardEdit(post, dueDate, isImportant);
     onClose();
   };
 
@@ -71,7 +51,6 @@ const CardEditModal = ({ card, onClose }: EditModalProps) => {
                 Title
               </label>
               <input
-                ref={inputRef}
                 className="form-control"
                 id="title"
                 name="title"
