@@ -1,18 +1,18 @@
-import { Header } from "./components/Header";
+import { Header } from "./components/header";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Route, Routes } from "react-router-dom";
-import { CompletePage } from "./pages/CompletePage";
-import { AllPage } from "./pages/AllPage";
-import { ActivePage } from "./pages/ActivePage";
+import { Complete } from "./pages/Complete";
+import { All } from "./pages/All";
+import { Active } from "./pages/Active";
 
 function App() {
   return (
     <>
       <Header />
       <Routes>
-        <Route path="/" element={<ActivePage />} />
-        <Route path="/all" element={<AllPage />} />
-        <Route path="/complete" element={<CompletePage />} />
+        <Route path="/" element={<Active />} />
+        <Route path="/all" element={<All />} />
+        <Route path="/complete" element={<Complete />} />
       </Routes>
     </>
   );

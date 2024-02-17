@@ -1,49 +1,49 @@
 import Moment from "moment";
-import { ICard } from "./ICard";
+import { ITodoItemCard } from "./ITodoItemCard";
 import CardItem from "react-bootstrap/Card";
 import { useState } from "react";
 import { createPortal } from "react-dom";
-import { CardEditModal } from "../CardEditModal";
-import { useCardDelete } from "../../hooks";
-import { Loader } from "../Loader";
-import { ErrorMessage } from "../ErrorMessage";
+import { TodoItemCardEdit } from "../todo-item-card-edit";
+import { useTodoItemCardDelete } from "../../hooks";
+import { Loader } from "../loader";
+import { ErrorMessage } from "../error-message";
 import { Category } from ".";
-import { useCardComplete } from "../../hooks/cardComplete";
+import { useTodoItemCardComplete } from "../../hooks/useTodoItemCardComplete";
 
-interface CardProps {
-  card: ICard;
+interface TodoItemCardProps {
+  todoItemCard: ITodoItemCard;
   isImportant: boolean;
   onCardDelete: (id: string) => void;
   onCardComplete: (complete: boolean) => void;
-  onCardEdit: (card: ICard) => void;
+  onCardEdit: (card: ITodoItemCard) => void;
 }
 
-const Card = ({
-  card,
+const TodoItemCard = ({
+  todoItemCard,
   isImportant,
   onCardComplete,
   onCardDelete,
   onCardEdit,
-}: CardProps) => {
-  const [editCard, setEditCard] = useState(card);
+}: TodoItemCardProps) => {
+  const [todoItemCardEdit, setTodoItemCardEdit] = useState(todoItemCard);
   const [showModal, setShowModal] = useState(false);
-  const { isLoading, error, cardDelete } = useCardDelete();
-  const { cardComplete } = useCardComplete();
+  const { isLoading, error, todoItemCardDelete } = useTodoItemCardDelete();
+  const { todoItemCardComplete } = useTodoItemCardComplete();
 
   const EditCardHandle = () => {
     setShowModal(true);
-    setEditCard(card);
-    onCardEdit(card);
+    setTodoItemCardEdit(todoItemCard);
+    onCardEdit(todoItemCard);
   };
 
   const DeleteCardHandler = () => {
-    cardDelete(card.id!);
-    onCardDelete(card.id!);
+    todoItemCardDelete(todoItemCard.id!);
+    onCardDelete(todoItemCard.id!);
   };
 
   const CompleteCardHandler = () => {
-    cardComplete(card);
-    onCardComplete(card.isCompleted);
+    todoItemCardComplete(todoItemCard);
+    onCardComplete(todoItemCard.isCompleted);
   };
 
   return (
@@ -53,19 +53,23 @@ const Card = ({
       {error && <ErrorMessage error={error} />}
 
       <CardItem className={isImportant ? "border-red-600 bg-red-200" : ""}>
-        <CardItem.Body className={card.isCompleted ? "bg-gray-100" : ""}>
+        <CardItem.Body
+          className={todoItemCard.isCompleted ? "bg-gray-100" : ""}
+        >
           <CardItem.Title className="mb-4">
-            {card.title}{" "}
+            {todoItemCard.title}{" "}
             <span className="float-right text-sm text-cyan-700">
-              {Category[card.category]}
+              {Category[todoItemCard.category]}
             </span>
           </CardItem.Title>
-          <CardItem.Text className="mb-4">{card.description}</CardItem.Text>
+          <CardItem.Text className="mb-4">
+            {todoItemCard.description}
+          </CardItem.Text>
           <CardItem.Subtitle className="mb-4 text-muted">
-            Due Date: {Moment(card.dueDate).format("DD MMMM YY")}
+            Due Date: {Moment(todoItemCard.dueDate).format("DD MMMM YY")}
           </CardItem.Subtitle>
           <div className="display-flex justify-content-between">
-            {!card.isCompleted && (
+            {!todoItemCard.isCompleted && (
               <>
                 <a
                   href="#"
@@ -96,14 +100,14 @@ const Card = ({
 
       {showModal &&
         createPortal(
-          <CardEditModal
-            card={editCard}
+          <TodoItemCardEdit
+            todoItemCard={todoItemCardEdit}
             onClose={() => setShowModal(false)}
-          ></CardEditModal>,
+          ></TodoItemCardEdit>,
           document.body
         )}
     </>
   );
 };
 
-export { Card };
+export { TodoItemCard };

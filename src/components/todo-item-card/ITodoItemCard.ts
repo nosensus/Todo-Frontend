@@ -1,4 +1,4 @@
-interface ICard {
+interface ITodoItemCard {
   id?: string
   title: string
   description: string
@@ -11,4 +11,4 @@ interface ICard {
   updatedDate?: string
 }
 
-export { type ICard }
+export { type ITodoItemCard }

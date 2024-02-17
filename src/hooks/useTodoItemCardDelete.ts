@@ -1,15 +1,15 @@
 import axios, { AxiosError } from "axios";
 import { useState } from "react";
 
-const useCardDelete = () => {
+const useTodoItemCardDelete = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
-  async function cardDelete(cardId: string) {
+  async function todoItemCardDelete(todoItemCardId: string) {
     try {
       setError("");
       setIsLoading(true);
-      await axios.delete("https://aufgabenliste.azurewebsites.net/api/todo" + "/" + cardId)
+      await axios.delete("https://aufgabenliste.azurewebsites.net/api/todo" + "/" + todoItemCardId)
       setIsLoading(false);
     } catch (e: unknown) {
       const error = e as AxiosError;
@@ -18,7 +18,7 @@ const useCardDelete = () => {
     }
   }
 
-  return { error, isLoading, cardDelete };
+  return { error, isLoading, todoItemCardDelete };
 }
 
-export { useCardDelete }
+export { useTodoItemCardDelete }
