@@ -1,5 +1,3 @@
-import { TodoItemCard } from "./TodoItemCard";
-import { ITodoItemCard } from "./ITodoItemCard";
-import { Color, Category } from "./TodoItemCardEnums";
-
-export { TodoItemCard, Color, Category, type ITodoItemCard }
+export * from './TodoItemCard'
+export * from './ITodoItemCard'
+export * from './TodoItemCardEnums'

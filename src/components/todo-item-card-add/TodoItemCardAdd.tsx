@@ -12,14 +12,13 @@ interface TodoItemCardAddProps {
   onCloseModal: () => void;
 }
 
-const todoItemCard: ITodoItemCard = {
+const emptyTodoItem: ITodoItemCard = {
   title: "",
   description: "",
-  category: 1,
-  dueDate: "",
-  cardColor: 1,
+  category: 0,
+  cardColor: 0,
   isImportant: false,
-  isCompleted: false,
+  isCompleted: false
 };
 
 const TodoItemCardAdd = ({
@@ -27,9 +26,9 @@ const TodoItemCardAdd = ({
   onCloseModal,
 }: TodoItemCardAddProps) => {
   const [dueDate, setDueDate] = useState(new Date());
-  const [post, setPost] = useState<ITodoItemCard>(todoItemCard);
+  const [post, setPost] = useState<ITodoItemCard>(emptyTodoItem);
   const [isImportant, setIsImportant] = useState(false);
-  const { error, isLoading, todoItemCardAdd } = useTodoItemCardAdd();
+  const { todoItemState, todoItemCardAdd } = useTodoItemCardAdd();
 
   const changeHandler = (event: any) => {
     setPost({ ...post, [event.target.name]: event.target.value });
@@ -55,9 +54,9 @@ const TodoItemCardAdd = ({
       <div className="modal_container">
         <h1 className="mb-3 font-medium">Add Todo</h1>
 
-        {isLoading && <Loader />}
+        {todoItemState.isLoading && <Loader />}
 
-        {error && <ErrorMessage error={error} />}
+        {todoItemState.error && <ErrorMessage error={todoItemState.error} />}
 
         <div className="mb-4">
           <form action="" onSubmit={submitHandler}>
@@ -149,7 +148,7 @@ const TodoItemCardAdd = ({
                 type="checkbox"
                 id="isImportant"
                 name="isImportant"
-                defaultChecked={todoItemCard.isImportant}
+                defaultChecked={emptyTodoItem.isImportant}
                 onChange={importantHandler}
               />
               <label className="form-check-label" htmlFor="isImportant">

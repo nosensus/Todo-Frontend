@@ -4,14 +4,14 @@ import { format } from "date-fns";
 import axios, { AxiosError } from "axios";
 
 const useTodoItemCardEdit = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [todoItemState, setTodoItemState] = useState({
+    isLoading: false,
+    error: "",
+  });
 
   async function todoItemCardEdit(todoItemCard: ITodoItemCard, dueDate: Date, isImportant: boolean) {
     try {
-      setError("");
-      setIsLoading(true);
-
+      setTodoItemState({ isLoading: true, error: "" })
       todoItemCard.dueDate = format(dueDate, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
       todoItemCard.isImportant = isImportant;
       todoItemCard.category = +todoItemCard.category;
@@ -26,15 +26,14 @@ const useTodoItemCardEdit = () => {
         todoItemCard
       );
 
-      setIsLoading(false);
+      setTodoItemState({ isLoading: false, error: "" })
     } catch (e: unknown) {
       const error = e as AxiosError;
-      setIsLoading(false);
-      setError(error.message);
+      setTodoItemState({ isLoading: false, error: error.message })
     }
   }
 
-  return { isLoading, error, todoItemCardEdit }
+  return { todoItemState, todoItemCardEdit }
 }
 
 export { useTodoItemCardEdit }

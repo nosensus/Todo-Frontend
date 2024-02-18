@@ -27,7 +27,7 @@ const TodoItemCard = ({
 }: TodoItemCardProps) => {
   const [todoItemCardEdit, setTodoItemCardEdit] = useState(todoItemCard);
   const [showModal, setShowModal] = useState(false);
-  const { isLoading, error, todoItemCardDelete } = useTodoItemCardDelete();
+  const { todoItemState, todoItemCardDelete } = useTodoItemCardDelete();
   const { todoItemCardComplete } = useTodoItemCardComplete();
 
   const EditCardHandle = () => {
@@ -48,17 +48,17 @@ const TodoItemCard = ({
 
   return (
     <>
-      {isLoading && <Loader />}
+      {todoItemState.isLoading && <Loader />}
 
-      {error && <ErrorMessage error={error} />}
+      {todoItemState.error && <ErrorMessage error={todoItemState.error} />}
 
       <CardItem className={isImportant ? "border-red-600 bg-red-200" : ""}>
         <CardItem.Body
           className={todoItemCard.isCompleted ? "bg-gray-100" : ""}
         >
           <CardItem.Title className="mb-4">
-            {todoItemCard.title}{" "}
-            <span className="float-right text-sm text-cyan-700">
+            {todoItemCard.title}
+            <span className="float-right text-sm text-cyan-700 ml-2">
               {Category[todoItemCard.category]}
             </span>
           </CardItem.Title>

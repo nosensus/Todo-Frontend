@@ -5,8 +5,8 @@ interface ITodoItemCard {
   category: number
   dueDate?: string
   cardColor: number
-  isImportant: boolean,
-  isCompleted: boolean,
+  isImportant: boolean
+  isCompleted: boolean
   createdDate?: string
   updatedDate?: string
 }

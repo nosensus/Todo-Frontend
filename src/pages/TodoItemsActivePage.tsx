@@ -7,8 +7,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { TodoItemCard, ITodoItemCard } from "../components/todo-item-card";
 import { TodoItemCardAdd } from "../components/todo-item-card-add";
 
-const Active = () => {
-  const { todoCards, isLoading, error, cardHook } = useTodoCards();
+const TodoItemsActivePage = () => {
+  const { todoItemState, todoItems, cardHook } = useTodoCards();
   const [showModal, setShowModal] = useState(false);
   const [cardDelete, setCardDelete] = useState(String);
   const [cardComplete, setCardComplete] = useState(false);
@@ -30,13 +30,13 @@ const Active = () => {
           Add Todo
         </button>
 
-        {isLoading && <Loader />}
+        {todoItemState.isLoading && <Loader />}
 
-        {error && <ErrorMessage error={error} />}
+        {todoItemState.error && <ErrorMessage error={todoItemState.error} />}
 
         {
           <div className="grid grid-cols-4 gap-4">
-            {todoCards
+            {todoItems
               .filter((c) => c.id != cardDelete && c.isCompleted != true)
               .map((card) => (
                 <TodoItemCard
@@ -64,4 +64,4 @@ const Active = () => {
   );
 };
 
-export { Active };
+export { TodoItemsActivePage };

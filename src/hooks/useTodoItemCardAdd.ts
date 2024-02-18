@@ -4,13 +4,14 @@ import axios, { AxiosError } from "axios";
 import { useState } from "react";
 
 const useTodoItemCardAdd = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [todoItemState, setTodoItemState] = useState({
+    isLoading: false,
+    error: "",
+  });
 
   async function todoItemCardAdd(todoItemCard: ITodoItemCard, dueDate: Date, isImportant: boolean) {
     try {
-      setError("");
-      setIsLoading(true);
+      setTodoItemState({ isLoading: true, error: "" })
 
       todoItemCard.dueDate = format(dueDate, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
       todoItemCard.isImportant = isImportant;
@@ -22,15 +23,14 @@ const useTodoItemCardAdd = () => {
         todoItemCard
       );
 
-      setIsLoading(false);
+      setTodoItemState({isLoading: false, error: ""})
     } catch (e: unknown) {
       const error = e as AxiosError;
-      setIsLoading(false);
-      setError(error.message);
+      setTodoItemState({ isLoading: false, error: error.message })
     }
   }
 
-  return { isLoading, error, todoItemCardAdd }
+  return { todoItemState, todoItemCardAdd }
 }
 
 export { useTodoItemCardAdd }

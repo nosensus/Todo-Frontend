@@ -1,7 +1,7 @@
 import { TodoItemCard } from "../components/todo-item-card";
 import { useTodoCards } from "../hooks";
 
-const All = () => {
+const TodoItemsPage = () => {
   const { todoCards } = useTodoCards();
   return (
     <>
@@ -27,4 +27,4 @@ const All = () => {
   );
 };
 
-export { All };
+export { TodoItemsPage };

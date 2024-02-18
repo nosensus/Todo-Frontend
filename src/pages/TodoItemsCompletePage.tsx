@@ -1,7 +1,7 @@
 import { useTodoCards } from "../hooks";
 import { TodoItemCard } from "../components/todo-item-card";
 
-const Complete = () => {
+const TodoItemsCompletePage = () => {
   const { todoCards } = useTodoCards();
 
   return (
@@ -30,4 +30,4 @@ const Complete = () => {
   );
 };
 
-export { Complete };
+export { TodoItemsCompletePage };

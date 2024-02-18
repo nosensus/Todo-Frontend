@@ -1,3 +1,1 @@
-import { TodoItemCardAdd } from "./TodoItemCardAdd";
-
-export { TodoItemCardAdd }
+export * from './TodoItemCardAdd'

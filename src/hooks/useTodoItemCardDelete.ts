@@ -2,23 +2,23 @@ import axios, { AxiosError } from "axios";
 import { useState } from "react";
 
 const useTodoItemCardDelete = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [todoItemState, setTodoItemState] = useState({
+    isLoading: false,
+    error: "",
+  });
 
   async function todoItemCardDelete(todoItemCardId: string) {
     try {
-      setError("");
-      setIsLoading(true);
+      setTodoItemState({ isLoading: true, error: "" })
       await axios.delete("https://aufgabenliste.azurewebsites.net/api/todo" + "/" + todoItemCardId)
-      setIsLoading(false);
+      setTodoItemState({ isLoading: false, error: "" })
     } catch (e: unknown) {
       const error = e as AxiosError;
-      setIsLoading(false);
-      setError(error.message);
+      setTodoItemState({ isLoading: false, error: error.message })
     }
   }
 
-  return { error, isLoading, todoItemCardDelete };
+  return { todoItemState, todoItemCardDelete };
 }
 
 export { useTodoItemCardDelete }
