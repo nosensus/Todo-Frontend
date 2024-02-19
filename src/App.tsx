@@ -5,7 +5,7 @@ import {
   TodoItemsCompletePage,
   TodoItemsPage,
   TodoItemsActivePage,
-} from "./pages/index";
+} from "./pages";
 
 function App() {
   return (
