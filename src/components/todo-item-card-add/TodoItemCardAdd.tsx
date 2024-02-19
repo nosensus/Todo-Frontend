@@ -1,22 +1,34 @@
-import "./CardEditModal.css";
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
+import { ErrorMessage } from "../error-message/ErrorMessage";
+import { Category, Color, ITodoItemCard } from "../todo-item-card";
 import "react-datepicker/dist/react-datepicker.css";
-import { Button } from "../Button";
-import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
-import { Category, Color, ICard } from "../Card";
-import { useCardEdit } from "../../hooks/cardEdit";
+import "./TodoItemCardAdd.css";
+import { useTodoItemCardAdd } from "../../hooks/useTodoItemCardAdd";
+import { Loader } from "../loader";
 
-interface EditModalProps {
-  card: ICard;
-  onClose: () => void;
+interface TodoItemCardAddProps {
+  onCardCreate: (card: ITodoItemCard) => void;
+  onCloseModal: () => void;
 }
 
-const CardEditModal = ({ card, onClose }: EditModalProps) => {
+const emptyTodoItem: ITodoItemCard = {
+  title: "",
+  description: "",
+  category: 0,
+  cardColor: 0,
+  isImportant: false,
+  isCompleted: false
+};
+
+const TodoItemCardAdd = ({
+  onCardCreate,
+  onCloseModal,
+}: TodoItemCardAddProps) => {
   const [dueDate, setDueDate] = useState(new Date());
-  const [post, setPost] = useState(card);
+  const [post, setPost] = useState<ITodoItemCard>(emptyTodoItem);
   const [isImportant, setIsImportant] = useState(false);
-  const { error, cardEdit } = useCardEdit();
+  const { todoItemState, todoItemCardAdd } = useTodoItemCardAdd();
 
   const changeHandler = (event: any) => {
     setPost({ ...post, [event.target.name]: event.target.value });
@@ -32,17 +44,19 @@ const CardEditModal = ({ card, onClose }: EditModalProps) => {
 
   const submitHandler = async (event: React.FormEvent) => {
     event.preventDefault();
-    await cardEdit(post, dueDate, isImportant);
-    onClose();
+    await todoItemCardAdd(post, dueDate, isImportant);
+    onCloseModal();
   };
 
   return (
     <>
-      <div className="modal_bg" onClick={onClose}></div>
+      <div className="modal_bg" onClick={onCloseModal}></div>
       <div className="modal_container">
-        <h1 className="mb-3 font-medium">Edit - {card.title}</h1>
+        <h1 className="mb-3 font-medium">Add Todo</h1>
 
-        {error && <ErrorMessage error={error} />}
+        {todoItemState.isLoading && <Loader />}
+
+        {todoItemState.error && <ErrorMessage error={todoItemState.error} />}
 
         <div className="mb-4">
           <form action="" onSubmit={submitHandler}>
@@ -55,7 +69,6 @@ const CardEditModal = ({ card, onClose }: EditModalProps) => {
                 id="title"
                 name="title"
                 type="text"
-                defaultValue={card.title}
                 onChange={changeHandler}
               />
             </div>
@@ -68,7 +81,6 @@ const CardEditModal = ({ card, onClose }: EditModalProps) => {
                 className="form-control"
                 name="description"
                 id="description"
-                defaultValue={card.description}
                 onChange={changeHandler}
               ></textarea>
             </div>
@@ -81,7 +93,6 @@ const CardEditModal = ({ card, onClose }: EditModalProps) => {
                 className="form-control"
                 name="category"
                 id="category"
-                defaultValue={card.category}
                 onChange={changeHandler}
               >
                 <option value={Category.None}>None</option>
@@ -103,7 +114,6 @@ const CardEditModal = ({ card, onClose }: EditModalProps) => {
                 className="form-control"
                 name="cardColor"
                 id="cardColor"
-                defaultValue={card.category}
                 onChange={changeHandler}
               >
                 <option value={Color.White}>White</option>
@@ -138,7 +148,7 @@ const CardEditModal = ({ card, onClose }: EditModalProps) => {
                 type="checkbox"
                 id="isImportant"
                 name="isImportant"
-                defaultChecked={card.isImportant}
+                defaultChecked={emptyTodoItem.isImportant}
                 onChange={importantHandler}
               />
               <label className="form-check-label" htmlFor="isImportant">
@@ -147,7 +157,9 @@ const CardEditModal = ({ card, onClose }: EditModalProps) => {
             </div>
 
             <div className="d-flex justify-end">
-              <Button onClick={submitHandler}>Save</Button>
+              <button className="btn btn-primary mb-0" onClick={submitHandler}>
+                Add
+              </button>
             </div>
           </form>
         </div>
@@ -156,4 +168,4 @@ const CardEditModal = ({ card, onClose }: EditModalProps) => {
   );
 };
 
-export { CardEditModal };
+export { TodoItemCardAdd };

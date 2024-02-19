@@ -1,33 +1,21 @@
+import "./TodoItemCardEdit.css";
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
-import { Button } from "../Button";
-import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
-import { Category, Color, ICard } from "../Card";
 import "react-datepicker/dist/react-datepicker.css";
-import "./CardAddModal.css";
-import { useCardAdd } from "../../hooks/cardAdd";
-import { Loader } from "../Loader";
+import { ErrorMessage } from "../error-message/ErrorMessage";
+import { Category, Color, ITodoItemCard } from "../todo-item-card";
+import { useTodoItemCardEdit } from "../../hooks/useTodoItemCardEdit";
 
-interface CardAddModalProps {
-  onCardCreate: (card: ICard) => void;
-  onCloseModal: () => void;
+interface EditModalProps {
+  todoItemCard: ITodoItemCard;
+  onClose: () => void;
 }
 
-const card: ICard = {
-  title: "",
-  description: "",
-  category: 1,
-  dueDate: "",
-  cardColor: 1,
-  isImportant: false,
-  isCompleted: false,
-};
-
-const CardAddModal = ({ onCardCreate, onCloseModal }: CardAddModalProps) => {
+const TodoItemCardEdit = ({ todoItemCard, onClose }: EditModalProps) => {
   const [dueDate, setDueDate] = useState(new Date());
-  const [post, setPost] = useState<ICard>(card);
+  const [post, setPost] = useState(todoItemCard);
   const [isImportant, setIsImportant] = useState(false);
-  const { error, isLoading, cardAdd } = useCardAdd();
+  const { todoItemState, todoItemCardEdit } = useTodoItemCardEdit();
 
   const changeHandler = (event: any) => {
     setPost({ ...post, [event.target.name]: event.target.value });
@@ -43,20 +31,17 @@ const CardAddModal = ({ onCardCreate, onCloseModal }: CardAddModalProps) => {
 
   const submitHandler = async (event: React.FormEvent) => {
     event.preventDefault();
-    await cardAdd(post, dueDate, isImportant);
-    // onCardCreate(post);
-    onCloseModal();
+    await todoItemCardEdit(post, dueDate, isImportant);
+    onClose();
   };
 
   return (
     <>
-      <div className="modal_bg" onClick={onCloseModal}></div>
+      <div className="modal_bg" onClick={onClose}></div>
       <div className="modal_container">
-        <h1 className="mb-3 font-medium">Add Todo</h1>
+        <h1 className="mb-3 font-medium">Edit - {todoItemCard.title}</h1>
 
-        {isLoading && <Loader />}
-
-        {error && <ErrorMessage error={error} />}
+        {todoItemState.error && <ErrorMessage error={todoItemState.error} />}
 
         <div className="mb-4">
           <form action="" onSubmit={submitHandler}>
@@ -69,6 +54,7 @@ const CardAddModal = ({ onCardCreate, onCloseModal }: CardAddModalProps) => {
                 id="title"
                 name="title"
                 type="text"
+                defaultValue={todoItemCard.title}
                 onChange={changeHandler}
               />
             </div>
@@ -81,6 +67,7 @@ const CardAddModal = ({ onCardCreate, onCloseModal }: CardAddModalProps) => {
                 className="form-control"
                 name="description"
                 id="description"
+                defaultValue={todoItemCard.description}
                 onChange={changeHandler}
               ></textarea>
             </div>
@@ -93,6 +80,7 @@ const CardAddModal = ({ onCardCreate, onCloseModal }: CardAddModalProps) => {
                 className="form-control"
                 name="category"
                 id="category"
+                defaultValue={todoItemCard.category}
                 onChange={changeHandler}
               >
                 <option value={Category.None}>None</option>
@@ -114,6 +102,7 @@ const CardAddModal = ({ onCardCreate, onCloseModal }: CardAddModalProps) => {
                 className="form-control"
                 name="cardColor"
                 id="cardColor"
+                defaultValue={todoItemCard.category}
                 onChange={changeHandler}
               >
                 <option value={Color.White}>White</option>
@@ -148,7 +137,7 @@ const CardAddModal = ({ onCardCreate, onCloseModal }: CardAddModalProps) => {
                 type="checkbox"
                 id="isImportant"
                 name="isImportant"
-                defaultChecked={card.isImportant}
+                defaultChecked={todoItemCard.isImportant}
                 onChange={importantHandler}
               />
               <label className="form-check-label" htmlFor="isImportant">
@@ -157,7 +146,9 @@ const CardAddModal = ({ onCardCreate, onCloseModal }: CardAddModalProps) => {
             </div>
 
             <div className="d-flex justify-end">
-              <Button onClick={submitHandler}>Add</Button>
+              <button className="btn btn-primary" onClick={submitHandler}>
+                Save
+              </button>
             </div>
           </form>
         </div>
@@ -166,4 +157,4 @@ const CardAddModal = ({ onCardCreate, onCloseModal }: CardAddModalProps) => {
   );
 };
 
-export { CardAddModal };
+export { TodoItemCardEdit };
