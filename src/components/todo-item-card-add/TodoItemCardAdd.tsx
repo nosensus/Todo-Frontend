@@ -8,7 +8,6 @@ import { useTodoItemCardAdd } from "../../hooks/useTodoItemCardAdd";
 import { Loader } from "../loader";
 
 interface TodoItemCardAddProps {
-  onCardCreate: (card: ITodoItemCard) => void;
   onCloseModal: () => void;
 }
 
@@ -18,23 +17,20 @@ const emptyTodoItem: ITodoItemCard = {
   category: 0,
   cardColor: 0,
   isImportant: false,
-  isCompleted: false
+  isCompleted: false,
 };
 
-const TodoItemCardAdd = ({
-  onCardCreate,
-  onCloseModal,
-}: TodoItemCardAddProps) => {
+const TodoItemCardAdd = ({ onCloseModal }: TodoItemCardAddProps) => {
   const [dueDate, setDueDate] = useState(new Date());
   const [post, setPost] = useState<ITodoItemCard>(emptyTodoItem);
   const [isImportant, setIsImportant] = useState(false);
-  const { todoItemState, todoItemCardAdd } = useTodoItemCardAdd();
+  const { status, todoItemCardAdd } = useTodoItemCardAdd();
 
   const changeHandler = (event: any) => {
     setPost({ ...post, [event.target.name]: event.target.value });
   };
 
-  const changeHandlerDate = (date: any) => {
+  const dateHandler = (date: any) => {
     setDueDate(date);
   };
 
@@ -54,9 +50,9 @@ const TodoItemCardAdd = ({
       <div className="modal_container">
         <h1 className="mb-3 font-medium">Add Todo</h1>
 
-        {todoItemState.isLoading && <Loader />}
+        {status.isLoading && <Loader />}
 
-        {todoItemState.error && <ErrorMessage error={todoItemState.error} />}
+        {status.error && <ErrorMessage error={status.error} />}
 
         <div className="mb-4">
           <form action="" onSubmit={submitHandler}>
@@ -137,7 +133,7 @@ const TodoItemCardAdd = ({
                   name="dueDate"
                   id="dueDate"
                   selected={dueDate}
-                  onChange={changeHandlerDate}
+                  onChange={dateHandler}
                 />
               </div>
             </div>

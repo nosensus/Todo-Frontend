@@ -1,8 +1,8 @@
-import { useTodoCards } from "../hooks";
 import { TodoItemCard } from "../components/todo-item-card";
+import { useTodoCards } from "../hooks";
 
 const TodoItemsCompletePage = () => {
-  const { todoCards } = useTodoCards();
+  const { todoItems } = useTodoCards();
 
   return (
     <>
@@ -11,7 +11,7 @@ const TodoItemsCompletePage = () => {
 
         {
           <div className="grid grid-cols-4 gap-4">
-            {todoCards
+            {todoItems
               .filter((c) => c.isCompleted == true)
               .map((card) => (
                 <TodoItemCard

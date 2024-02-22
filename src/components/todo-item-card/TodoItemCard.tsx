@@ -5,8 +5,6 @@ import { useState } from "react";
 import { createPortal } from "react-dom";
 import { TodoItemCardEdit } from "../todo-item-card-edit";
 import { useTodoItemCardDelete } from "../../hooks";
-import { Loader } from "../loader";
-import { ErrorMessage } from "../error-message";
 import { Category } from ".";
 import { useTodoItemCardComplete } from "../../hooks/useTodoItemCardComplete";
 
@@ -27,7 +25,7 @@ const TodoItemCard = ({
 }: TodoItemCardProps) => {
   const [todoItemCardEdit, setTodoItemCardEdit] = useState(todoItemCard);
   const [showModal, setShowModal] = useState(false);
-  const { todoItemState, todoItemCardDelete } = useTodoItemCardDelete();
+  const { todoItemCardDelete } = useTodoItemCardDelete();
   const { todoItemCardComplete } = useTodoItemCardComplete();
 
   const EditCardHandle = () => {
@@ -48,10 +46,6 @@ const TodoItemCard = ({
 
   return (
     <>
-      {todoItemState.isLoading && <Loader />}
-
-      {todoItemState.error && <ErrorMessage error={todoItemState.error} />}
-
       <CardItem className={isImportant ? "border-red-600 bg-red-200" : ""}>
         <CardItem.Body
           className={todoItemCard.isCompleted ? "bg-gray-100" : ""}

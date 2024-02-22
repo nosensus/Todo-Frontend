@@ -2,8 +2,8 @@ import { Header } from "./components/header";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Route, Routes } from "react-router-dom";
 import {
-  TodoItemsCompletePage,
-  TodoItemsPage,
+  // TodoItemsCompletePage,
+  // TodoItemsPage,
   TodoItemsActivePage,
 } from "./pages";
 
@@ -13,8 +13,8 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<TodoItemsActivePage />} />
-        <Route path="/all" element={<TodoItemsPage />} />
-        <Route path="/complete" element={<TodoItemsCompletePage />} />
+        {/* <Route path="/all" element={<TodoItemsPage />} />
+        <Route path="/complete" element={<TodoItemsCompletePage />} /> */}
       </Routes>
     </>
   );

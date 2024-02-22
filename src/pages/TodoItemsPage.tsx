@@ -2,7 +2,8 @@ import { TodoItemCard } from "../components/todo-item-card";
 import { useTodoCards } from "../hooks";
 
 const TodoItemsPage = () => {
-  const { todoCards } = useTodoCards();
+  const { todoItems } = useTodoCards();
+
   return (
     <>
       <section className="container mx-auto">
@@ -10,11 +11,11 @@ const TodoItemsPage = () => {
 
         {
           <div className="grid grid-cols-4 gap-4">
-            {todoCards.map((card) => (
+            {todoItems.map((item) => (
               <TodoItemCard
-                isImportant={card.isImportant}
-                key={card.id}
-                todoItemCard={card}
+                isImportant={item.isImportant}
+                key={item.id}
+                todoItemCard={item}
                 onCardComplete={() => undefined}
                 onCardDelete={() => undefined}
                 onCardEdit={() => undefined}

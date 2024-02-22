@@ -15,7 +15,7 @@ const TodoItemCardEdit = ({ todoItemCard, onClose }: EditModalProps) => {
   const [dueDate, setDueDate] = useState(new Date());
   const [post, setPost] = useState(todoItemCard);
   const [isImportant, setIsImportant] = useState(false);
-  const { todoItemState, todoItemCardEdit } = useTodoItemCardEdit();
+  const { status, todoItemCardEdit } = useTodoItemCardEdit();
 
   const changeHandler = (event: any) => {
     setPost({ ...post, [event.target.name]: event.target.value });
@@ -41,7 +41,7 @@ const TodoItemCardEdit = ({ todoItemCard, onClose }: EditModalProps) => {
       <div className="modal_container">
         <h1 className="mb-3 font-medium">Edit - {todoItemCard.title}</h1>
 
-        {todoItemState.error && <ErrorMessage error={todoItemState.error} />}
+        {status.error && <ErrorMessage error={status.error} />}
 
         <div className="mb-4">
           <form action="" onSubmit={submitHandler}>

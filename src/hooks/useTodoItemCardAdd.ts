@@ -1,36 +1,24 @@
 import { format } from "date-fns";
-import { ITodoItemCard } from "../components/todo-item-card";
-import axios, { AxiosError } from "axios";
+import { ITodoItemCard } from "../components/todo-item-card"
 import { useState } from "react";
+import { apiRequestAdd } from "../api";
 
 const useTodoItemCardAdd = () => {
-  const [todoItemState, setTodoItemState] = useState({
-    isLoading: false,
-    error: "",
-  });
+  const [status, setStatus] = useState({ isLoading: false, error: "" });
+  const { todoItemState, addData, refetchData } = apiRequestAdd();
 
-  async function todoItemCardAdd(todoItemCard: ITodoItemCard, dueDate: Date, isImportant: boolean) {
-    try {
-      setTodoItemState({ isLoading: true, error: "" })
+  function todoItemCardAdd(todoItemCard: ITodoItemCard, dueDate: Date, isImportant: boolean) {
+    todoItemCard.dueDate = format(dueDate, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
+    todoItemCard.isImportant = isImportant;
+    todoItemCard.category = +todoItemCard.category;
+    todoItemCard.cardColor = +todoItemCard.cardColor;
+    addData(todoItemCard);
+    refetchData();
 
-      todoItemCard.dueDate = format(dueDate, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
-      todoItemCard.isImportant = isImportant;
-      todoItemCard.category = +todoItemCard.category;
-      todoItemCard.cardColor = +todoItemCard.cardColor;
-
-      await axios.post<ITodoItemCard>(
-        "https://aufgabenliste.azurewebsites.net/api/todo",
-        todoItemCard
-      );
-
-      setTodoItemState({isLoading: false, error: ""})
-    } catch (e: unknown) {
-      const error = e as AxiosError;
-      setTodoItemState({ isLoading: false, error: error.message })
-    }
+    setStatus({ isLoading: todoItemState.isLoading, error: todoItemState.error });
   }
 
-  return { todoItemState, todoItemCardAdd }
+  return { status, todoItemCardAdd }
 }
 
 export { useTodoItemCardAdd }
