@@ -4,7 +4,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ErrorMessage } from "../error-message/ErrorMessage";
 import { Category, Color, ITodoItemCard } from "../todo-item-card";
-import { useTodoItemCardEdit } from "../../hooks/useTodoItemCardEdit";
+import { useTodoItemEdit } from "../../hooks/useTodoItemEdit";
+import { Loader } from "../loader";
 
 interface EditModalProps {
   todoItemCard: ITodoItemCard;
@@ -15,7 +16,10 @@ const TodoItemCardEdit = ({ todoItemCard, onClose }: EditModalProps) => {
   const [dueDate, setDueDate] = useState(new Date());
   const [post, setPost] = useState(todoItemCard);
   const [isImportant, setIsImportant] = useState(false);
-  const { status, todoItemCardEdit } = useTodoItemCardEdit();
+  const {
+    query: { isLoading },
+    todoItemEdit,
+  } = useTodoItemEdit();
 
   const changeHandler = (event: any) => {
     setPost({ ...post, [event.target.name]: event.target.value });
@@ -31,7 +35,7 @@ const TodoItemCardEdit = ({ todoItemCard, onClose }: EditModalProps) => {
 
   const submitHandler = async (event: React.FormEvent) => {
     event.preventDefault();
-    await todoItemCardEdit(post, dueDate, isImportant);
+    await todoItemEdit(post, dueDate, isImportant);
     onClose();
   };
 
@@ -41,7 +45,8 @@ const TodoItemCardEdit = ({ todoItemCard, onClose }: EditModalProps) => {
       <div className="modal_container">
         <h1 className="mb-3 font-medium">Edit - {todoItemCard.title}</h1>
 
-        {status.error && <ErrorMessage error={status.error} />}
+        {isLoading && <Loader />}
+        {/* {error && <ErrorMessage error={error} />} */}
 
         <div className="mb-4">
           <form action="" onSubmit={submitHandler}>

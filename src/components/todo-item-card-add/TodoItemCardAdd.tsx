@@ -4,8 +4,8 @@ import { ErrorMessage } from "../error-message/ErrorMessage";
 import { Category, Color, ITodoItemCard } from "../todo-item-card";
 import "react-datepicker/dist/react-datepicker.css";
 import "./TodoItemCardAdd.css";
-import { useTodoItemCardAdd } from "../../hooks/useTodoItemCardAdd";
 import { Loader } from "../loader";
+import { useTodoItemCreate } from "../../hooks/useTodoItemCreate";
 
 interface TodoItemCardAddProps {
   onCloseModal: () => void;
@@ -24,7 +24,10 @@ const TodoItemCardAdd = ({ onCloseModal }: TodoItemCardAddProps) => {
   const [dueDate, setDueDate] = useState(new Date());
   const [post, setPost] = useState<ITodoItemCard>(emptyTodoItem);
   const [isImportant, setIsImportant] = useState(false);
-  const { status, todoItemCardAdd } = useTodoItemCardAdd();
+  const {
+    query: { isLoading },
+    todoItemCreate,
+  } = useTodoItemCreate();
 
   const changeHandler = (event: any) => {
     setPost({ ...post, [event.target.name]: event.target.value });
@@ -40,7 +43,7 @@ const TodoItemCardAdd = ({ onCloseModal }: TodoItemCardAddProps) => {
 
   const submitHandler = async (event: React.FormEvent) => {
     event.preventDefault();
-    await todoItemCardAdd(post, dueDate, isImportant);
+    await todoItemCreate(post, dueDate, isImportant);
     onCloseModal();
   };
 
@@ -50,9 +53,9 @@ const TodoItemCardAdd = ({ onCloseModal }: TodoItemCardAddProps) => {
       <div className="modal_container">
         <h1 className="mb-3 font-medium">Add Todo</h1>
 
-        {status.isLoading && <Loader />}
+        {isLoading && <Loader />}
 
-        {status.error && <ErrorMessage error={status.error} />}
+        {/* {status.error && <ErrorMessage error={status.error} />} */}
 
         <div className="mb-4">
           <form action="" onSubmit={submitHandler}>

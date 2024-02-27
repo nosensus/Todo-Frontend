@@ -4,9 +4,9 @@ import CardItem from "react-bootstrap/Card";
 import { useState } from "react";
 import { createPortal } from "react-dom";
 import { TodoItemCardEdit } from "../todo-item-card-edit";
-import { useTodoItemCardDelete } from "../../hooks";
+import { useTodoItemDelete } from "../../hooks";
 import { Category } from ".";
-import { useTodoItemCardComplete } from "../../hooks/useTodoItemCardComplete";
+import { useTodoItemComplete } from "../../hooks/useTodoItemComplete";
 
 interface TodoItemCardProps {
   todoItemCard: ITodoItemCard;
@@ -25,8 +25,8 @@ const TodoItemCard = ({
 }: TodoItemCardProps) => {
   const [todoItemCardEdit, setTodoItemCardEdit] = useState(todoItemCard);
   const [showModal, setShowModal] = useState(false);
-  const { todoItemCardDelete } = useTodoItemCardDelete();
-  const { todoItemCardComplete } = useTodoItemCardComplete();
+  const { todoItemDelete } = useTodoItemDelete();
+  const { todoItemComplete } = useTodoItemComplete();
 
   const EditCardHandle = () => {
     setShowModal(true);
@@ -35,12 +35,12 @@ const TodoItemCard = ({
   };
 
   const DeleteCardHandler = () => {
-    todoItemCardDelete(todoItemCard.id!);
+    todoItemDelete(todoItemCard.id!);
     onCardDelete(todoItemCard.id!);
   };
 
   const CompleteCardHandler = () => {
-    todoItemCardComplete(todoItemCard);
+    todoItemComplete(todoItemCard);
     onCardComplete(todoItemCard.isCompleted);
   };
 
