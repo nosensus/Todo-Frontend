@@ -16,7 +16,7 @@ const useTodoItemDelete = () => {
     } catch (error) {
 
     } finally {
-
+      setQuery({ ...query, isLoading: false });
     }
   }
 

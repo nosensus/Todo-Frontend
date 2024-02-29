@@ -18,7 +18,7 @@ const useTodoItemComplete = () => {
     } catch (error) {
 
     } finally {
-
+      setQuery({ ...query, isLoading: false });
     }
   }
 

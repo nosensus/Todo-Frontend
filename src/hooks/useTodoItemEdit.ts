@@ -20,7 +20,7 @@ const useTodoItemEdit = () => {
     try {
       editTodoItem(todoItemCard);
     } catch (error) {
-
+      setQuery({ ...query, isLoading: false });
     } finally {
 
     }
