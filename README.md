@@ -1,3 +1,7 @@
+### local .env config
+- VITE_APP_API_URL=<https://localhost:8000/api/todo/>
+- VITE_DEBUG_MODE=true
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.

@@ -1,11 +1,12 @@
 import { ITodoItemCard } from "../components/todo-item-card";
+const apiUrl = import.meta.env.VITE_APP_API_URL || "https://aufgabenliste.azurewebsites.net/api/todo";
 
 const getTodoList = async () => {
-  return await fetch("https://aufgabenliste.azurewebsites.net/api/todo")
+  return await fetch(`${apiUrl}`)
 }
 
 const createTodoItem = async (newTodoItem: ITodoItemCard) => {
-  await fetch("https://aufgabenliste.azurewebsites.net/api/todo", {
+  await fetch(`${apiUrl}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -15,7 +16,7 @@ const createTodoItem = async (newTodoItem: ITodoItemCard) => {
 }
 
 const editTodoItem = async (editTodoItem: ITodoItemCard) => {
-  await fetch(`https://aufgabenliste.azurewebsites.net/api/todo/${editTodoItem.id}?id=${editTodoItem.id}`, {
+  await fetch(`${apiUrl}${editTodoItem.id}?id=${editTodoItem.id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -25,7 +26,7 @@ const editTodoItem = async (editTodoItem: ITodoItemCard) => {
 }
 
 const deleteTodoItem = async (id: string) => {
-  await fetch(`https://aufgabenliste.azurewebsites.net/api/todo/${id}`, {
+  await fetch(`${apiUrl}${id}`, {
     method: 'DELETE'
   });
 }
