@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { deleteTodoItem } from "../api";
+import { useTodoList } from ".";
 
 const useTodoItemDelete = () => {
   const [query, setQuery] = useState<{
@@ -7,6 +8,7 @@ const useTodoItemDelete = () => {
     error: unknown | undefined
   }>({ isLoading: false, error: undefined });
 
+  const { queryTodoList } = useTodoList();
 
   const todoItemDelete = async (id: string) => {
     setQuery({ ...query, isLoading: true });
@@ -14,9 +16,10 @@ const useTodoItemDelete = () => {
     try {
       await deleteTodoItem(id);
     } catch (error) {
-
+      setQuery({ isLoading: false, error: error });
     } finally {
       setQuery({ ...query, isLoading: false });
+      queryTodoList();
     }
   }
 

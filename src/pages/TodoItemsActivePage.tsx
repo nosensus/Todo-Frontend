@@ -1,21 +1,16 @@
 import { Loader } from "../components/loader";
-import { ErrorMessage } from "../components/error-message";
 import { createPortal } from "react-dom";
 import { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { TodoItemCard, ITodoItemCard } from "../components/todo-item-card";
+import { TodoItemCard } from "../components/todo-item-card";
 import { TodoItemCardAdd } from "../components/todo-item-card-add";
 import { useTodoList } from "../hooks/useTodoList";
+import { ErrorMessage } from "../components/error-message";
 
 const TodoItemsActivePage = () => {
   const [showModal, setShowModal] = useState(false);
-  const [cardDelete, setCardDelete] = useState(String);
-  const [cardComplete, setCardComplete] = useState(false);
-  const [todoItemCardEdit, setCardEdit] = useState<ITodoItemCard>();
-
   const {
-    todoList,
-    query: { isLoading },
+    queryProps: { isLoading, error, todoList },
     queryTodoList,
   } = useTodoList();
 
@@ -37,22 +32,17 @@ const TodoItemsActivePage = () => {
 
         {isLoading && <Loader />}
 
-        {/* {error && (
-          <ErrorMessage message={(error as { message: string }).message} />
-        )} */}
+        {/* {<ErrorMessage message={{ error }} />} */}
 
         {
           <div className="grid grid-cols-4 gap-4">
             {todoList
-              ?.filter((c) => c.id != cardDelete && c.isCompleted != true)
+              ?.filter((c) => c.isCompleted != true)
               .map((card) => (
                 <TodoItemCard
                   isImportant={card.isImportant}
                   key={card.id}
                   todoItemCard={card}
-                  onCardComplete={() => setCardComplete(card.isCompleted)}
-                  onCardDelete={() => setCardDelete(card.id!)}
-                  onCardEdit={() => setCardEdit(card)}
                 />
               ))}
           </div>

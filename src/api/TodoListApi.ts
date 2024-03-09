@@ -2,7 +2,7 @@ import { ITodoItemCard } from "../components/todo-item-card";
 const apiUrl = import.meta.env.VITE_APP_API_URL || "https://aufgabenliste.azurewebsites.net/api/todo";
 
 const getTodoList = async () => {
-  return await fetch(`${apiUrl}`)
+  return await fetch(`${apiUrl}`);
 }
 
 const createTodoItem = async (newTodoItem: ITodoItemCard) => {

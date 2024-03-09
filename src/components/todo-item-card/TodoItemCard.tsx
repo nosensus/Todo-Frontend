@@ -4,44 +4,39 @@ import CardItem from "react-bootstrap/Card";
 import { useState } from "react";
 import { createPortal } from "react-dom";
 import { TodoItemCardEdit } from "../todo-item-card-edit";
-import { useTodoItemDelete } from "../../hooks";
-import { Category } from ".";
-import { useTodoItemComplete } from "../../hooks/useTodoItemComplete";
+import {
+  useTodoItemDelete,
+  useTodoItemComplete,
+  useTodoList,
+} from "../../hooks";
+import { Category } from "./TodoItemCardEnums";
 
 interface TodoItemCardProps {
   todoItemCard: ITodoItemCard;
   isImportant: boolean;
-  onCardDelete: (id: string) => void;
-  onCardComplete: (complete: boolean) => void;
-  onCardEdit: (card: ITodoItemCard) => void;
 }
 
-const TodoItemCard = ({
-  todoItemCard,
-  isImportant,
-  onCardComplete,
-  onCardDelete,
-  onCardEdit,
-}: TodoItemCardProps) => {
-  const [todoItemCardEdit, setTodoItemCardEdit] = useState(todoItemCard);
+const TodoItemCard = ({ todoItemCard, isImportant }: TodoItemCardProps) => {
   const [showModal, setShowModal] = useState(false);
   const { todoItemDelete } = useTodoItemDelete();
   const { todoItemComplete } = useTodoItemComplete();
+  const { queryTodoList } = useTodoList();
 
-  const EditCardHandle = () => {
+  const EditCardHandle = async () => {
     setShowModal(true);
-    setTodoItemCardEdit(todoItemCard);
-    onCardEdit(todoItemCard);
   };
 
   const DeleteCardHandler = () => {
     todoItemDelete(todoItemCard.id!);
-    onCardDelete(todoItemCard.id!);
   };
 
   const CompleteCardHandler = () => {
     todoItemComplete(todoItemCard);
-    onCardComplete(todoItemCard.isCompleted);
+  };
+
+  const closeEditModal = async () => {
+    await queryTodoList();
+    setShowModal(false);
   };
 
   return (
@@ -95,8 +90,8 @@ const TodoItemCard = ({
       {showModal &&
         createPortal(
           <TodoItemCardEdit
-            todoItemCard={todoItemCardEdit}
-            onClose={() => setShowModal(false)}
+            todoItemCard={todoItemCard}
+            onClose={closeEditModal}
           ></TodoItemCardEdit>,
           document.body
         )}

@@ -18,11 +18,9 @@ const useTodoItemEdit = () => {
     todoItemCard.cardColor = +todoItemCard.cardColor;
 
     try {
-      editTodoItem(todoItemCard);
+      await editTodoItem(todoItemCard);
     } catch (error) {
       setQuery({ ...query, isLoading: false });
-    } finally {
-
     }
   }
 

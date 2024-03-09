@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
-import { ErrorMessage } from "../error-message/ErrorMessage";
 import { Category, Color, ITodoItemCard } from "../todo-item-card";
 import "react-datepicker/dist/react-datepicker.css";
 import "./TodoItemCardAdd.css";
 import { Loader } from "../loader";
-import { useTodoItemCreate } from "../../hooks/useTodoItemCreate";
+import { useTodoItemCreate } from "../../hooks";
 
 interface TodoItemCardAddProps {
   onCloseModal: () => void;
@@ -24,6 +23,7 @@ const TodoItemCardAdd = ({ onCloseModal }: TodoItemCardAddProps) => {
   const [dueDate, setDueDate] = useState(new Date());
   const [post, setPost] = useState<ITodoItemCard>(emptyTodoItem);
   const [isImportant, setIsImportant] = useState(false);
+
   const {
     query: { isLoading },
     todoItemCreate,
@@ -54,8 +54,6 @@ const TodoItemCardAdd = ({ onCloseModal }: TodoItemCardAddProps) => {
         <h1 className="mb-3 font-medium">Add Todo</h1>
 
         {isLoading && <Loader />}
-
-        {/* {status.error && <ErrorMessage error={status.error} />} */}
 
         <div className="mb-4">
           <form action="" onSubmit={submitHandler}>

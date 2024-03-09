@@ -22,13 +22,12 @@ const useTodoItemCreate = () => {
     try {
       await createTodoItem(todoItemCard);
     } catch (error) {
-      // setQuery({ ...query, isLoading: false, error });
+      setQuery({ isLoading: false, error: error });
     }
     finally {
       setQuery({ ...query, isLoading: false });
       queryTodoList();
     }
-
   }
 
   return { query, todoItemCreate }

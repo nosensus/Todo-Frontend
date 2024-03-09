@@ -1,12 +1,17 @@
+import { useEffect } from "react";
 import { Loader } from "../components/loader";
 import { TodoItemCard } from "../components/todo-item-card";
 import { useTodoList } from "../hooks";
 
 const TodoItemsPage = () => {
   const {
-    todoList,
-    query: { isLoading },
+    queryProps: { isLoading, todoList },
+    queryTodoList,
   } = useTodoList();
+
+  useEffect(() => {
+    queryTodoList();
+  }, []);
 
   return (
     <>
@@ -22,9 +27,6 @@ const TodoItemsPage = () => {
                 isImportant={item.isImportant}
                 key={item.id}
                 todoItemCard={item}
-                onCardComplete={() => undefined}
-                onCardDelete={() => undefined}
-                onCardEdit={() => undefined}
               />
             ))}
           </div>

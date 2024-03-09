@@ -2,9 +2,8 @@ import "./TodoItemCardEdit.css";
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { ErrorMessage } from "../error-message/ErrorMessage";
 import { Category, Color, ITodoItemCard } from "../todo-item-card";
-import { useTodoItemEdit } from "../../hooks/useTodoItemEdit";
+import { useTodoItemEdit } from "../../hooks";
 import { Loader } from "../loader";
 
 interface EditModalProps {
@@ -16,6 +15,7 @@ const TodoItemCardEdit = ({ todoItemCard, onClose }: EditModalProps) => {
   const [dueDate, setDueDate] = useState(new Date());
   const [post, setPost] = useState(todoItemCard);
   const [isImportant, setIsImportant] = useState(false);
+
   const {
     query: { isLoading },
     todoItemEdit,
@@ -46,7 +46,6 @@ const TodoItemCardEdit = ({ todoItemCard, onClose }: EditModalProps) => {
         <h1 className="mb-3 font-medium">Edit - {todoItemCard.title}</h1>
 
         {isLoading && <Loader />}
-        {/* {error && <ErrorMessage error={error} />} */}
 
         <div className="mb-4">
           <form action="" onSubmit={submitHandler}>
