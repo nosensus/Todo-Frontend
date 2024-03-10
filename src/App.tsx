@@ -6,16 +6,19 @@ import {
   TodoItemsPage,
   TodoItemsActivePage,
 } from "./pages";
+import { TodoListProvider } from "./store";
 
 function App() {
   return (
     <>
       <Header />
-      <Routes>
-        <Route path="/" element={<TodoItemsActivePage />} />
-        <Route path="/all" element={<TodoItemsPage />} />
-        <Route path="/complete" element={<TodoItemsCompletePage />} />
-      </Routes>
+      <TodoListProvider>
+        <Routes>
+          <Route path="/" element={<TodoItemsActivePage />} />
+          <Route path="/all" element={<TodoItemsPage />} />
+          <Route path="/complete" element={<TodoItemsCompletePage />} />
+        </Routes>
+      </TodoListProvider>
     </>
   );
 }

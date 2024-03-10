@@ -1,23 +1,32 @@
+import { useEffect } from "react";
+import { Loader } from "../components/loader";
 import { TodoItemCard } from "../components/todo-item-card";
-import { useTodoCards } from "../hooks";
+import { useTodoList } from "../hooks";
 
 const TodoItemsPage = () => {
-  const { todoCards } = useTodoCards();
+  const {
+    queryProps: { isLoading, todoList },
+    queryTodoList,
+  } = useTodoList();
+
+  useEffect(() => {
+    queryTodoList();
+  }, []);
+
   return (
     <>
       <section className="container mx-auto">
         <h1 className="text-3xl font-bold mb-4">All Task</h1>
 
+        {isLoading && <Loader />}
+
         {
           <div className="grid grid-cols-4 gap-4">
-            {todoCards.map((card) => (
+            {todoList?.map((item) => (
               <TodoItemCard
-                isImportant={card.isImportant}
-                key={card.id}
-                todoItemCard={card}
-                onCardComplete={() => undefined}
-                onCardDelete={() => undefined}
-                onCardEdit={() => undefined}
+                isImportant={item.isImportant}
+                key={item.id}
+                todoItemCard={item}
               />
             ))}
           </div>

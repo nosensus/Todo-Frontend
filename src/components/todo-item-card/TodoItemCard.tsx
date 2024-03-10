@@ -4,54 +4,43 @@ import CardItem from "react-bootstrap/Card";
 import { useState } from "react";
 import { createPortal } from "react-dom";
 import { TodoItemCardEdit } from "../todo-item-card-edit";
-import { useTodoItemCardDelete } from "../../hooks";
-import { Loader } from "../loader";
-import { ErrorMessage } from "../error-message";
-import { Category } from ".";
-import { useTodoItemCardComplete } from "../../hooks/useTodoItemCardComplete";
+import {
+  useTodoItemDelete,
+  useTodoItemComplete,
+  useTodoList,
+} from "../../hooks";
+import { Category } from "./TodoItemCardEnums";
 
 interface TodoItemCardProps {
   todoItemCard: ITodoItemCard;
   isImportant: boolean;
-  onCardDelete: (id: string) => void;
-  onCardComplete: (complete: boolean) => void;
-  onCardEdit: (card: ITodoItemCard) => void;
 }
 
-const TodoItemCard = ({
-  todoItemCard,
-  isImportant,
-  onCardComplete,
-  onCardDelete,
-  onCardEdit,
-}: TodoItemCardProps) => {
-  const [todoItemCardEdit, setTodoItemCardEdit] = useState(todoItemCard);
+const TodoItemCard = ({ todoItemCard, isImportant }: TodoItemCardProps) => {
   const [showModal, setShowModal] = useState(false);
-  const { todoItemState, todoItemCardDelete } = useTodoItemCardDelete();
-  const { todoItemCardComplete } = useTodoItemCardComplete();
+  const { todoItemDelete } = useTodoItemDelete();
+  const { todoItemComplete } = useTodoItemComplete();
+  const { queryTodoList } = useTodoList();
 
-  const EditCardHandle = () => {
+  const EditCardHandle = async () => {
     setShowModal(true);
-    setTodoItemCardEdit(todoItemCard);
-    onCardEdit(todoItemCard);
   };
 
   const DeleteCardHandler = () => {
-    todoItemCardDelete(todoItemCard.id!);
-    onCardDelete(todoItemCard.id!);
+    todoItemDelete(todoItemCard.id!);
   };
 
   const CompleteCardHandler = () => {
-    todoItemCardComplete(todoItemCard);
-    onCardComplete(todoItemCard.isCompleted);
+    todoItemComplete(todoItemCard);
+  };
+
+  const closeEditModal = async () => {
+    await queryTodoList();
+    setShowModal(false);
   };
 
   return (
     <>
-      {todoItemState.isLoading && <Loader />}
-
-      {todoItemState.error && <ErrorMessage error={todoItemState.error} />}
-
       <CardItem className={isImportant ? "border-red-600 bg-red-200" : ""}>
         <CardItem.Body
           className={todoItemCard.isCompleted ? "bg-gray-100" : ""}
@@ -101,8 +90,8 @@ const TodoItemCard = ({
       {showModal &&
         createPortal(
           <TodoItemCardEdit
-            todoItemCard={todoItemCardEdit}
-            onClose={() => setShowModal(false)}
+            todoItemCard={todoItemCard}
+            onClose={closeEditModal}
           ></TodoItemCardEdit>,
           document.body
         )}
