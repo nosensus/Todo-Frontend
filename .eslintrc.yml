@@ -6,9 +6,13 @@ extends:
   - eslint:recommended
   - plugin:@typescript-eslint/recommended
   - plugin:react/recommended
+  - plugin:react/jsx-runtime
 parser: '@typescript-eslint/parser'
 parserOptions:
   ecmaVersion: latest
+  ecmaFeatures: {
+      jsx: true
+    }
 plugins:
   - '@typescript-eslint'
   - react
@@ -18,4 +22,6 @@ rules: {
   react/prefer-stateless-function: true,
   react/jsx-closing-bracket-location: true,
   react/jsx-closing-tag-location: true,
+  react/jsx-uses-react: "error",
+  react/jsx-uses-vars: "error",
 }
