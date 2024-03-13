@@ -2,10 +2,13 @@
   "compilerOptions": {
     "target": "ES2020",
     "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "lib": [
+      "ES2020",
+      "DOM",
+      "DOM.Iterable"
+    ],
     "module": "ESNext",
     "skipLibCheck": true,
-
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
@@ -13,13 +16,48 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "baseUrl": ".",
+    "paths": {
+      "@todo/*": [
+        "./src/*",
+        "./dist/*",
+        ""
+      ],
+      "@todo/api": [
+        "src/api/*"
+      ],
+      "@todo/utils/*": [
+        "src/utils/*"
+      ],
+      "@todo/store/*": [
+        "src/store/*"
+      ],
+      "@todo/setup/*": [
+        "src/setup/*"
+      ],
+      "@todo/components/*": [
+        "src/components/*"
+      ],
+      "@todo/hooks/*": [
+        "src/hooks/*"
+      ],
+      "@todo/consts": [
+        "src/consts.ts"
+      ],
+    }
   },
-  "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": [
+    "src",
+    "types"
+  ],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ]
 }
