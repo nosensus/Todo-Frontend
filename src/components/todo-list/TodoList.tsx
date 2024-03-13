@@ -15,7 +15,10 @@ const TodoList = () => {
     <div>
       <h1>Data:</h1>
       {todoList.map((card) => (
-        <div key={card.id}>{card.title}</div>
+        <div key={card.id}>
+          <h2>{card.title}</h2>
+          <p>{card.description}</p>
+        </div>
       ))}
     </div>
   );

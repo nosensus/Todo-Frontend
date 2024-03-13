@@ -29,7 +29,8 @@ const TodoListProvider = ({ children }: { children: ReactNode }) => {
     setQueryProps({ isLoading: true, error: undefined, todoList: [] });
     try {
       const response = await getTodoList();
-      setQueryProps({ isLoading: false, error: '', todoList: response.json() });
+      const data = await response.json();
+      setQueryProps({ isLoading: false, error: '', todoList: data });
     } catch (error) {
       setQueryProps({ isLoading: false, error: error, todoList: [] });
     }
