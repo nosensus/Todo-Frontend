@@ -2,12 +2,12 @@ type TodoItem = {
   id?: string;
   title: string;
   description: string;
-  category: number;
+  category?: number;
   dueDate?: string;
-  cardColor: number;
+  cardColor?: number;
   isImportant: boolean;
   isCompleted: boolean;
-  createdDate?: string;
+  createdDate: string;
   updatedDate?: string;
 }
 

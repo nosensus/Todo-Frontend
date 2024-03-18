@@ -21,7 +21,6 @@ const TodoListContext = createContext<TodoListQueryProps>({
 const TodoListProvider = ({ children }: { children: ReactNode }) => {
   const [queryProps, setQueryProps] = useState<TodoListQuery>({
     isLoading: false,
-    error: '',
     todoList: [],
   });
 
@@ -30,7 +29,7 @@ const TodoListProvider = ({ children }: { children: ReactNode }) => {
     try {
       const response = await getTodoList();
       const data = await response.json();
-      setQueryProps({ isLoading: false, error: '', todoList: data });
+      setQueryProps({ isLoading: false, todoList: data });
     } catch (error) {
       setQueryProps({ isLoading: false, error: error, todoList: [] });
     }
