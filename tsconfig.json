@@ -49,6 +49,9 @@
       "@todo/consts": [
         "src/consts.ts"
       ],
+      "@todo/enums": [
+        "src/enums.ts"
+      ]
     }
   },
   "include": [
