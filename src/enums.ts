@@ -1,5 +1,5 @@
 enum Category {
-  Home = 1,
+  Home,
   Work,
   Main,
   Children,
@@ -9,7 +9,7 @@ enum Category {
 }
 
 enum Color {
-  White = 1,
+  White,
   Red,
   Green,
   Black,

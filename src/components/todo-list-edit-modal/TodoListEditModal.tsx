@@ -57,12 +57,9 @@ const TodoListEditModal = ({ todoItem, isEdit, onClose }: TodoItemProps) => {
                 <select
                   id="category"
                   name="category"
-                  defaultValue={isEdit ? todoItem.category : 'default'}
+                  defaultValue={isEdit ? todoItem.category : ''}
                   className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight"
                 >
-                  <option value="default" disabled>
-                    Select category
-                  </option>
                   <option value={Category.Home}>Home</option>
                   <option value={Category.Work}>Work</option>
                   <option value={Category.Main}>Main</option>
@@ -93,12 +90,9 @@ const TodoListEditModal = ({ todoItem, isEdit, onClose }: TodoItemProps) => {
                 <select
                   id="cardColor"
                   name="cardColor"
-                  defaultValue={isEdit ? todoItem.cardColor : 'default'}
+                  defaultValue={isEdit ? todoItem.cardColor : ''}
                   className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight"
                 >
-                  <option value="default" disabled>
-                    Select card color
-                  </option>
                   <option value={Color.White}>White</option>
                   <option value={Color.Red}>Red</option>
                   <option value={Color.Green}>Green</option>
