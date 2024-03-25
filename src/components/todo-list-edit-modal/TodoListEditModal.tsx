@@ -2,13 +2,7 @@ import DatePicker from 'react-datepicker';
 import { Category, Color } from '@todo/enums';
 import { TodoItem } from '@todo/store';
 
-const newTodoItem: TodoItem = {
-  title: '',
-  description: '',
-  isImportant: false,
-  isCompleted: false,
-  createdDate: new Date().toDateString(),
-};
+const dateToday = new Date().toDateString();
 
 type TodoItemProps = {
   todoItem: TodoItem;
@@ -17,10 +11,6 @@ type TodoItemProps = {
 };
 
 const TodoListEditModal = ({ todoItem, isEdit, onClose }: TodoItemProps) => {
-  if (!isEdit) {
-    todoItem = newTodoItem;
-  }
-
   return (
     <>
       <div className="relative">
@@ -41,7 +31,7 @@ const TodoListEditModal = ({ todoItem, isEdit, onClose }: TodoItemProps) => {
                   id="title"
                   name="title"
                   type="text"
-                  defaultValue={todoItem.title}
+                  defaultValue={isEdit ? todoItem.title : ''}
                   placeholder="Enter title"
                   className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight"
                 />
@@ -54,7 +44,7 @@ const TodoListEditModal = ({ todoItem, isEdit, onClose }: TodoItemProps) => {
                 <textarea
                   id="description"
                   name="description"
-                  defaultValue={todoItem.description}
+                  defaultValue={isEdit ? todoItem.description : ''}
                   placeholder="Description"
                   className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight"
                 />
@@ -67,10 +57,12 @@ const TodoListEditModal = ({ todoItem, isEdit, onClose }: TodoItemProps) => {
                 <select
                   id="category"
                   name="category"
-                  defaultValue={todoItem.category}
+                  defaultValue={isEdit ? todoItem.category : 'default'}
                   className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight"
                 >
-                  <option value={Category.None}>None</option>
+                  <option value="default" disabled>
+                    Select category
+                  </option>
                   <option value={Category.Home}>Home</option>
                   <option value={Category.Work}>Work</option>
                   <option value={Category.Main}>Main</option>
@@ -89,7 +81,7 @@ const TodoListEditModal = ({ todoItem, isEdit, onClose }: TodoItemProps) => {
                   id="dueDate"
                   name="dueDate"
                   minDate={new Date()}
-                  selected={todoItem.dueDate}
+                  selected={isEdit ? todoItem.dueDate : dateToday}
                   className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight"
                 />
               </div>
@@ -101,9 +93,12 @@ const TodoListEditModal = ({ todoItem, isEdit, onClose }: TodoItemProps) => {
                 <select
                   id="cardColor"
                   name="cardColor"
-                  defaultValue={todoItem.cardColor}
+                  defaultValue={isEdit ? todoItem.cardColor : 'default'}
                   className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight"
                 >
+                  <option value="default" disabled>
+                    Select card color
+                  </option>
                   <option value={Color.White}>White</option>
                   <option value={Color.Red}>Red</option>
                   <option value={Color.Green}>Green</option>
@@ -122,7 +117,7 @@ const TodoListEditModal = ({ todoItem, isEdit, onClose }: TodoItemProps) => {
                 <DatePicker
                   id="createdDate"
                   name="createdDate"
-                  selected={todoItem.createdDate}
+                  selected={isEdit ? todoItem.createdDate : dateToday}
                   className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight"
                 />
               </div>
@@ -135,7 +130,7 @@ const TodoListEditModal = ({ todoItem, isEdit, onClose }: TodoItemProps) => {
                   id="updatedDate"
                   name="updatedDate"
                   minDate={new Date()}
-                  selected={todoItem.updatedDate}
+                  selected={isEdit ? todoItem.updatedDate : dateToday}
                   className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight"
                 />
               </div>
@@ -147,7 +142,7 @@ const TodoListEditModal = ({ todoItem, isEdit, onClose }: TodoItemProps) => {
                       id="isImportant"
                       name="isImportant"
                       type="checkbox"
-                      defaultChecked={todoItem.isImportant}
+                      defaultChecked={isEdit ? todoItem.isImportant : false}
                       className="mr-2 leading-tight"
                     />
                     <span className="text-sm">Important</span>
@@ -160,7 +155,7 @@ const TodoListEditModal = ({ todoItem, isEdit, onClose }: TodoItemProps) => {
                       id="isCompleted"
                       name="isCompleted"
                       type="checkbox"
-                      defaultChecked={todoItem.isCompleted}
+                      defaultChecked={isEdit ? todoItem.isCompleted : false}
                       className="mr-2 leading-tight"
                     />
                     <span className="text-sm">Completed</span>

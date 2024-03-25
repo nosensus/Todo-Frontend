@@ -1,6 +1,5 @@
 enum Category {
-  None = 1,
-  Home,
+  Home = 1,
   Work,
   Main,
   Children,

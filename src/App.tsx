@@ -1,4 +1,4 @@
-import { TodoListWrapper } from '@todo/components';
+import { TodoList } from '@todo/components';
 import { TodoListProvider } from '@todo/store';
 import './App.css';
 
@@ -6,7 +6,7 @@ function App() {
   return (
     <>
       <TodoListProvider>
-        <TodoListWrapper />
+        <TodoList />
       </TodoListProvider>
     </>
   );
