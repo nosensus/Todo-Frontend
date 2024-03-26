@@ -7,3 +7,9 @@
   margin: 0 auto;
   padding: 2rem;
 }
+
+/* DatePicker input width */
+.react-datepicker-wrapper,
+.react-datepicker-wrapper input {
+  width: 100%;
+}
