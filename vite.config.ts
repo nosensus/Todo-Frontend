@@ -15,6 +15,7 @@ export default defineConfig({
       "@todo/components": `${path.resolve(__dirname, "./src/components/")}`,
       "@todo/hooks": `${path.resolve(__dirname, "./src/hooks/")}`,
       "@todo/consts": `${path.resolve(__dirname, "./src/consts")}`,
+      "@todo/enums": `${path.resolve(__dirname, "./src/enums")}`,
     }
   }
 });
