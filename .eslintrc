@@ -49,7 +49,6 @@
     "react/jsx-curly-spacing": "warn",
     "react/jsx-boolean-value": "warn",
     "react/jsx-wrap-multilines": "warn",
-    "react/jsx-no-bind": "warn",
     "jsx-a11y/alt-text": "warn",
     "jsx-a11y/img-redundant-alt": "warn",
     "jsx-a11y/no-access-key": "warn",
