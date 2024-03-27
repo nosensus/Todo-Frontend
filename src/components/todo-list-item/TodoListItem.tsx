@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
-import Moment from 'moment';
 import { Category } from '@todo/enums';
 import { TodoItem } from '@todo/store';
 import { TodoListEditModal } from '@todo/components';
+import { DateParser } from '@todo/utils';
 
 type TodoItemProps = {
   item: TodoItem;
@@ -24,7 +24,7 @@ const TodoListItem = ({ item }: TodoItemProps) => {
           <span className="text-blue-400 text-sm">{Category[item.category]}</span>
         </div>
         <p className="font-mono mb-2 text-slate-500">{item.description}</p>
-        <p className="text-sm text-slate-500">Due Date: {Moment(item.dueDate).format('DD MMMM YY')}</p>
+        <p className="text-sm text-slate-500">Due Date: {DateParser(item.dueDate)}</p>
       </div>
 
       {showModal &&

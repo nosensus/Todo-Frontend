@@ -1,6 +1,7 @@
 import DatePicker from 'react-datepicker';
 import { Category, Color } from '@todo/enums';
 import { TodoItem } from '@todo/store';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const dateToday = new Date().toDateString();
 
@@ -74,13 +75,14 @@ const TodoListEditModal = ({ todoItem, isEdit, onClose }: TodoItemProps) => {
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="dueDate">
                   Due date
                 </label>
-                <DatePicker
-                  id="dueDate"
-                  name="dueDate"
-                  minDate={new Date()}
-                  selected={isEdit ? todoItem.dueDate : dateToday}
-                  className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight"
-                />
+                <div className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight">
+                  <DatePicker
+                    id="dueDate"
+                    name="dueDate"
+                    minDate={new Date()}
+                    selected={isEdit ? todoItem.dueDate : dateToday}
+                  />
+                </div>
               </div>
 
               <div className="mb-4">
@@ -108,25 +110,27 @@ const TodoListEditModal = ({ todoItem, isEdit, onClose }: TodoItemProps) => {
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="createdDate">
                   Created date
                 </label>
-                <DatePicker
-                  id="createdDate"
-                  name="createdDate"
-                  selected={isEdit ? todoItem.createdDate : dateToday}
-                  className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight"
-                />
+                <div className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight">
+                  <DatePicker
+                    id="createdDate"
+                    name="createdDate"
+                    selected={isEdit ? todoItem.createdDate : dateToday}
+                  />
+                </div>
               </div>
 
               <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="updatedDate">
                   Updated date
                 </label>
-                <DatePicker
-                  id="updatedDate"
-                  name="updatedDate"
-                  minDate={new Date()}
-                  selected={isEdit ? todoItem.updatedDate : dateToday}
-                  className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight"
-                />
+                <div className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight">
+                  <DatePicker
+                    id="updatedDate"
+                    name="updatedDate"
+                    minDate={new Date()}
+                    selected={isEdit ? todoItem.updatedDate : dateToday}
+                  />
+                </div>
               </div>
 
               <div className="flex mb-6">
